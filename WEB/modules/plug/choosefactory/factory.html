@@ -1,0 +1,14 @@
+﻿
+
+{%
+	for(var i=0, j=$data.length; i < j; i++){
+	var item = $data[i];
+%}
+    <li>
+        <span class="check ico-check mTop5" data-id="{%=item.ClientID%}" data-name="{%=item.CompanyName%}"></span>
+		<span class="name long">{%=item.CompanyName%}</span>
+        <span class="width100 long">{%=item.ClientCode%}</span>
+        <span class="width100 long">{%=item.MobilePhone==""?"--":item.MobilePhone%}</span>
+        <span class="width150 center">{%=item.ContactName==""?"--":item.ContactName%}</span>
+	</li>
+{% } %}

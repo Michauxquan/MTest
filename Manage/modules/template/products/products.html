@@ -1,0 +1,19 @@
+﻿{%
+	for(var i=0, j=$data.length; i < j; i++){
+	var item = $data[i];
+%}
+<tr class="list-item">
+    <td class=""><a href="/Products/ChooseDetail?pid={%=item.ProductID%}" target="_blank"><img onerror="$(this).attr('src','/modules/images/img-noimg.png')" alt="略缩图" src="{%=item.ProductImage%}" /></a></td>
+    <td><a href="/Products/ChooseDetail?pid={%=item.ProductID%}" target="_blank">{%=item.ProductName%}</a></td>
+    <td>{%=item.ProductCode%}</td>
+    <td class="center">{%=item.Price.toFixed(2)+'/'+item.UnitName%}</td>
+    <td class='center'>{%=item.IsPublicStr%}</td>
+    <td>{%=item.CategoryName%}</td>
+    <td>{%=item.ProviderName%}</td>
+    <td class="tRight">
+        <div class="{%=item.IsPublic==1?'btn':'hide'%} auditproduct" data-id="{%=item.ProductID%}">审核</div>
+        <div class="{%=item.IsPublic==1?'btn':'hide'%} cancelproduct" data-id="{%=item.ProductID%}">驳回</div>
+        <div class="{%=item.IsPublic==2?'btn':'hide'%} deleteproduct" data-id="{%=item.ProductID%}">撤销</div>
+    </td>
+</tr>
+{% } %}

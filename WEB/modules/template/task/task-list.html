@@ -1,0 +1,158 @@
+﻿{%
+	for(var i=0; i<$data.length; i++){
+	var item = $data[i];
+    var order=item.Order;
+    var totalDay=(item.UseDays==0?1:item.UseDays)+(item.WarningDays==0?1:item.WarningDays);
+%}
+    <tr class="item-header">
+        <td colspan="2" class="" style="position:relative;">
+            <span class="mark left" data-id="{%=item.TaskID%}" data-value="{%= item.ColorMark %}"></span>
+            <a href="/Task/Detail/{%=item.TaskID%}" class="left bold mLeft10">
+                任务名称：{%=item.Title==""?"--":item.Title%}
+            </a>
+            <span style="position:absolute;right:8px;top:5px;" 
+                class="iconfont ico-reply font20 show-task-reply stage-items {%=(item.FinishStatus == 0 ? 'normal' : item.FinishStatus == 1 ? 'ing' : 'over')%}"
+               data-stageid="{%=item.StageID%}" data-lock="no"
+                    data-orderid="{%=item.OrderID%}" data-taskid="{%=item.TaskID%}" data-mark="{%=item.Mark%}">
+            </span>
+        </td>
+        <td class="width300 tLeft bold">
+            负责人：{%=(item.Owner ? item.Owner.Name:"--")%}
+        </td>
+        <td class="bold">
+            任务派发日期：{%=item.CreateTime.toDate("yyyy-MM-dd")%}
+        </td>
+    </tr>
+    <tr class="item orderitem">
+        <td class="order-image">
+            <a href="/Task/Detail/{%=item.TaskID%}" >
+                <img src="{%= item.OrderImg||'/modules/images/img-noimg.png' %}" onerror="$(this).attr('src','/modules/images/img-noimg.png')" />
+            </a> 
+        </td>  
+        <td class="order-costinfo tLeft">
+            <div>
+                <span class="column-title">订单款式：</span>
+                    {%=(order.GoodsName+order.IntGoodsCode)==''?order.OrderCode:order.IntGoodsCode+'-'+order.GoodsName%}
+            </div>
+            <div>
+                <span class="column-title">接受日期：</span>
+                <span class="accept-date">{%=item.AcceptTime.toDate("yyyy-MM-dd")<="1900-01-01"||item.AcceptTime.toDate("yyyy-MM-dd")>="2040-01-01"?"未接受":item.AcceptTime.toDate("yyyy-MM-dd")%}</span>
+            </div>
+            <div>
+                <span class="column-title">进度：</span>
+                <span class="accept-status">{%=item.FinishStatus==0?'未接受':item.FinishStatus==2?'已完成':'进行中'%}</span>
+            </div>
+            <div>
+                <span class="column-title">订单类型：</span>
+                {%=item.OrderType==1?"打样":"大货"%}
+            </div>
+        </td>
+        <td class="order-customer tLeft">
+            <div class="mTop5">
+                <span class="column-title">上级任务：</span>
+                {%=item.PreTitle||"--"%}
+            </div>
+            {%if(item.PreFinishStatus==2 ){%}
+                <div style="color:#067BE4">
+                    <span class="column-title">上级任务进度：</span>
+                    已完成
+                </div>
+                <div>
+                    <span class="column-title">上级完成日期：</span>
+                    {%=item.PCompleteTime.toDate("yyyy-MM-dd")%}
+                </div>   
+            {% }else if (item.PreFinishStatus==1){%}
+                <div style="color:#02C969">
+                    <span class="column-title">上级任务进度：</span>
+                    进行中
+                </div>
+                <div>
+                    <span class="column-title">上级结束日期：</span>
+                    {%=item.PEndTime.toDate("yyyy-MM-dd")%}
+                </div>   
+            {% }else if (item.PreFinishStatus==0){%}
+                <div style="color:red">
+                    <span class="column-title">上级任务进度：</span>
+                    未接受
+                </div>
+                <div>
+                    <span class="column-title">上级结束日期：</span>
+                    {%=item.PEndTime.toDate("yyyy-MM-dd")<="1900-01-01"||item.PEndTime.toDate("yyyy-MM-dd")>="2040-01-01"?"未设置":item.PEndTime.toDate("yyyy-MM-dd")%}
+                </div>   
+                {% }else{%}
+                <div style="color:red">
+                    <span class="column-title">上级任务进度：</span>
+                    --
+                </div>
+                <div>
+                    <span class="column-title">上级结束日期：</span>
+                    --
+                </div>   
+            {% }%}  
+        </td>   
+        <td class="order-time">
+            {% if(item.FinishStatus==0){ 
+            %}
+                <div class="left">
+                    <div class="order-progress left">  
+                        {%
+                            if($data.currentUserID==item.OwnerID)
+                            {
+                        %}
+                            <div class="center btn btn-accept" data-id="{%=item.TaskID%}" data-maxhours="{%=item.MaxHours%}" data-plantime="{%=item.Order.PlanTime.toDate('yyyy-MM-dd hh:mm:ss')%}">
+                                接受任务
+                            </div>   
+                        
+                        {%}
+                        else{
+                        %}
+                        <div class="center red">
+                            未接受
+                        </div>      
+                        {%}%}            
+                        <div class="center mTop20">结束日期：未设置</div>
+                        <div class="clear"></div>
+                    </div>
+                </div>    
+            {% }else if(item.FinishStatus==1){ %}
+                <div class="mTop20">
+                    <div class="order-progress left">
+                        <div class="layer-line"></div>
+                        <div class="order-progress-use order-progress-item" data-width="{%=(item.UseDays==0?1:item.UseDays)/totalDay*100+'%'%}">
+                            <div class="progress-tip">{%=item.UseDays==0?1:item.UseDays%}天</div>
+                            <div class="top-lump"></div>
+                        </div>
+                        <div class="{%=item.WarningStatus==1?'order-progress-warn':item.WarningStatus==2?'order-progress-exceed':item.WarningStatus==3?'order-progress-complete':'order-progress-have'%} order-progress-item" data-width="{%=(item.WarningDays==0?1:item.WarningDays)/totalDay*100+'%'%}">
+                            <div class="progress-tip">{%=item.WarningStatus==2?"超期":item.WarningStatus==0?"剩余":item.WarningStatus==1?"剩余":"完成"%}{%=item.WarningDays==0?1:item.WarningDays%}天</div>
+                            <div class="top-lump"></div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="center pTop20">
+                        {%=totalDay%}天
+                    </div>
+                    <div class="mTop20">结束日期：<span class="mLeft10">{%=item.EndTime.toDate("yyyy-MM-dd")%}</span></div>
+                </div>
+            {% }else{ %}    
+               <div class="mTop40 left">
+                    <div class="order-progress left">
+                        <div class="layer-line"></div>
+                        <div class="order-progress-use order-progress-item" data-width="{%=(item.UseDays==0?1:item.UseDays)/totalDay*100+'%'%}">
+                            <div class="progress-tip">{%=item.UseDays==0?1:item.UseDays%}天</div>
+                            <div class="top-lump"></div>
+                        </div>
+                        <div class="{%=item.WarningStatus==1?'order-progress-warn':item.WarningStatus==2?'order-progress-exceed':item.WarningStatus==3?'order-progress-complete':'order-progress-have'%} order-progress-item" data-width="{%=(item.WarningDays==0?1:item.WarningDays)/totalDay*100+'%'%}">
+                            <div class="progress-tip">{%=item.WarningStatus==2?"超期":item.WarningStatus==0?"剩余":item.WarningStatus==1?"剩余":"完成"%}{%=item.WarningDays==0?1:item.WarningDays%}天</div>
+                            <div class="top-lump"></div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="center pTop20">
+                        {%=totalDay%}天
+                    </div>
+                    <div class="mTop20">完成日期：<span class="mLeft10">{%=item.CompleteTime.toDate("yyyy-MM-dd")%}</span></div>
+                </div>
+            {% } %}    
+        </td>
+    </tr>
+{% } %}

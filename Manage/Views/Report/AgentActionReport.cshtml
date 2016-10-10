@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "客户行为统计";
+}
+
+@section css{
+    <link href="/modules/plug/daterangepicker/daterangepicker.css" rel="stylesheet" />
+    }
+ <script src="/modules/plug/laydate/laydate.js"></script>
+@section scripts{   
+        <script type="text/javascript">
+            seajs.use(["scripts/report/agentactionreport"], function (agentactionreport) {
+                agentactionreport.init();
+            });
+    </script>
+}
+
+<div class="header-box">
+    <span class="header-title">客户行为统计</span>
+</div>
+
+<div class="content-body">
+    <div class="search-body">
+        <div class="left">
+             <input type="text" id="rptBeginTime" placeholder="请选择时间段"  class="ipt-date" />
+        </div>
+        <div id="ClientType" class="left mLeft5"></div>
+        
+        <div class="right searth-module" data-text="输入关键字..." data-width="150"></div>
+        <div class="clear"></div>
+    </div>
+
+    <table class="table-list mTop20">
+        <tr class="tr-header">
+            <td class="tLeft">工厂代码</td>
+            <td class="tLeft">工厂名称</td>
+            <td class="tLeft">阿里ID</td>
+            <td>
+                <span class="td-span hover" data-column="SUM(a.CustomerCount)"> 客户
+                    <span class="asc"></span>
+                    <span class="desc hover"></span>
+               </span>
+            </td>
+            <td >
+               <span class="td-span" data-column="SUM(a.OrdersCount)"> 订单
+                    <span class="asc"></span>
+                    <span class="desc"></span>
+               </span>
+            </td> 
+             <td >
+               <span class="td-span" data-column="SUM(a.DownOrderCount)"> 拉取订单
+                    <span class="asc"></span>
+                    <span class="desc"></span>
+               </span>
+            </td> 
+             <td >
+               <span class="td-span" data-column="SUM(a.TaskCount)"> 任务
+                    <span class="asc"></span>
+                    <span class="desc"></span>
+               </span>
+            </td> 
+              <td >
+               <span class="td-span" data-column="SUM(a.ProductOrderCount)"> 生产订单
+                    <span class="asc"></span>
+                    <span class="desc"></span>
+               </span>
+            </td>
+            <td>                
+                <span class="td-span" data-column="SUM(a.ProductCount)"> 材料
+                    <span class="asc"></span>
+                    <span class="desc"></span>
+               </span>
+            </td>
+            <td> 
+                <span class="td-span" data-column="SUM(a.UsersCount)"> 员工
+                    <span class="asc"></span>
+                    <span class="desc"></span>
+               </span>
+            </td>
+           @* <td>代理商数</td>
+            <td>机会数</td>*@
+            <td>
+                <span class="td-span" data-column="PurchaseCount"> 采购 
+                    <span class="asc"></span>
+                    <span class="desc"></span>
+               </span>
+            </td>
+            @*<td>出库数</td>*@
+        </tr>
+    </table>
+    <div id="pager"  class="mTop20"></div>
+</div>

@@ -1,0 +1,281 @@
+﻿@{
+    var taskModel =(YXERP.Models.TaskModel)Model;
+    var task = taskModel.Task;
+    var order = taskModel.Order;
+    var taskDescs = (List<IntFactoryEntity.CategoryItemsEntity>)ViewBag.Modules;
+ }
+
+<div class="header-box">
+    <div class="header-title">
+        任务编码：@(task.TaskCode)
+        <a class="btn-back right" href="javascript:if(history.length>1){ history.go(-1);} else{}">返回</a>
+        <div class="right mRight10">
+            @if (taskModel.IsTaskOwner)
+            {
+                if(task.FinishStatus==0)
+                {
+                    <input type="button" class="btn" id="AcceptTask" value="接受任务"/>
+                }
+                else if (task.FinishStatus == 1)
+                {
+                    <input type="button" class="btn" id="FinishTask" value="标记完成"/>
+                }
+                else if (task.FinishStatus == 2 && task.LockStatus==2)
+                {
+                    <input type="button" class="btn" id="LockTask" value="锁定任务"/>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<div class="content-title">
+    <div class="left titlename">订单款式：<a class="font14" href="/Orders/OrderDetail/@(order.OrderID)" >
+        @(string.IsNullOrEmpty(order.GoodsName+order.IntGoodsCode)?order.OrderCode:order.IntGoodsCode+"-"+order.GoodsName)
+    </a></div>
+    <ul class="right">
+        <li title="任务完成状态">
+            <span class="left"> 任务状态：</span>
+            <label class="left content-item" >
+                @( task.FinishStatus==0?"未接受":task.FinishStatus==1?"进行中":(task.FinishStatus==2&&task.LockStatus==2)?"已重启":"已完成" )
+            </label>
+        </li>
+        <li title="订单类型">
+            <span class="left"> 订单类型：</span><label class="left content-item" >@(task.OrderType==1?"打样":"大货")</label>
+        </li>
+        <li title="订单交货日期">
+            <span class="left"> 交货日期：</span><label class="left content-item" >@(order.PlanTime.ToString("yyyy-MM-dd"))</label>
+        </li>
+        <li>
+            <span class="left"> 负责人：</span><label class="left content-item">@(task.Owner != null ? task.Owner.Name : "--")</label>
+        </li>
+    </ul>
+</div>
+
+<div class="taskContent content-body">
+   <div class="taskDetail">
+        <div class="order-imgs-div left">
+            <div class="order-imgs">
+                <img id="orderImage" src="@(order.OrderImage)" />
+            </div>
+            <ul class="order-imgs-list mTop5"></ul>
+        </div>
+       
+       <div class="mLeft20 left">
+            <div class="titlename mTop5 mBottom10">
+                <span class="bold font16">@(task.Title)</span>
+            </div>
+            <ul class=" taskBaseInfo ">
+                 <li class="li-plustime"><span class="column-title" id="overplusTime">剩余时间：</span>
+                    <span class="task-time" id="time-d">0</span>
+                    <span class="mRight10">天</span>
+
+                    <span class="task-time" id="time-h">0</span>
+                    <span class="mRight10">时</span>
+
+                    <span class="task-time" id="time-m">0</span>
+                     <span class="mRight10">分</span>
+
+                    <span class="task-time" id="time-s">0</span>
+                     <span>秒</span>
+                </li>
+                <li>
+                    <span class="column-title">接受时间：</span>
+                    <span id="AcceptTime">@(task.AcceptTime.ToString("yyyy-MM-dd") == "0001-01-01" ? "未接受" : task.AcceptTime.ToString("yyyy-MM-dd HH:mm:ss"))</span>
+                </li>
+                <li>
+                    <span class="column-title">到期时间：</span>
+                    <span>@(task.EndTime.ToString("yyyy-MM-dd") == "0001-01-01" ? "未设置" : task.EndTime.ToString("yyyy-MM-dd HH:mm:ss"))</span>
+                </li>
+                <li>
+                    <span class="column-title">完成时间：</span>
+                    <span id="CompleteTime">@(task.CompleteTime.ToString("yyyy-MM-dd") == "0001-01-01" ? "未完成" : task.CompleteTime.ToString("yyyy-MM-dd HH:mm:ss"))</span>
+                </li>
+                @{
+                    if (task.FinishStatus==2)
+                    {
+                        <li>
+                            <span class="column-title">任务周期</span>
+                            <span>@(taskModel.FinishDay)天</span>
+                        </li>
+                    }
+                }
+                 <li>
+                @{
+                    if (!taskModel.IsTaskOwner)
+                    {
+                        <span class="column-title left">成员</span>                            
+                        if (task.TaskMembers.Count > 0)
+                        {
+                            foreach (var member in task.TaskMembers)
+                            {
+                            <div class="task-member left">
+                                <div class="pRight10"><span>@(member.Member.Name)&nbsp;&nbsp;&nbsp;</span></div>
+                            </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="left">暂无成员</div>
+                        }
+                    }
+                }
+                <div class="clear"></div>
+                </li>
+            </ul>
+        </div>
+       
+        @{
+            if (taskModel.IsTaskOwner)
+            {
+            <div class="right memberlist mTop5">
+                    
+            @{
+                if(task.FinishStatus>0){
+                    <div class="member-title">
+                        <span class="right btn-add" id="addTaskMembers">添加成员</span>
+                    </div>
+                }
+            }
+            <div class="clear"></div>
+
+            <div class="member-boxs">
+                <table class="member-items">
+                    <thead>
+                        <tr>
+                            <td class="tLeft pLeft10 task-members"><span class="iconfont">&#xe624;</span>成员列表</td>
+                            <td>查看权限</td>
+                            <td>编辑权限</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            if (task.TaskMembers.Count > 0)
+                            {
+                                foreach (var member in task.TaskMembers)
+                                {
+                                    <tr data-id="@member.Member.UserID">
+                                        <td class="tLeft pLeft10" width="166">
+                                            <i><img src="@(string.IsNullOrEmpty(member.Member.Avatar) ? "/modules/images/defaultavatar.png" : member.Member.Avatar)" /></i>
+                                            <i class="membername">@member.Member.Name</i>
+                                        </td>
+                                        <td>
+                                            <i class="hand ico-radiobox check-lump @(member.PermissionType==1?"hover":"")" data-type="1" data-taskid="@member.TaskID" data-memberid="@member.MemberID">
+                                                    <span></span>
+                                            </i>
+                                        </td>
+                                        <td>
+                                            <i class="hand ico-radiobox check-lump @(member.PermissionType==2?"hover":"")" data-type="2" data-taskid="@member.TaskID" data-memberid="@member.MemberID">
+                                                <span></span>
+                                            </i>
+                                        </td>
+                                        <td class="hand removeTaskMember iconfont" data-id="@member.Member.UserID">&#xe651;</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr class="member-nodata-txt"><td colspan="4" class="font14 color666" width="380">暂无成员</td></tr>
+                            }
+                       
+                        }
+                    </tbody>
+            </table>
+            </div>
+        </div>
+           }
+        }
+             
+       <div class="clear"></div>
+       <div class="order-remark"><span class="title">详细需求：</span>@(order.Remark)</div>
+    </div>
+  </div>
+
+<div class="process-stages content-body">
+    <ul class="stage-items mTop10">
+        
+    </ul>
+</div>
+
+<div class="module-header mTop20">
+    <ul class="module-tab">
+        <li  class="@(task.Mark==0?"default-check":"")" data-id="taskReplys">讨论</li>
+        @{
+            //材料
+            if(task.Mark==11)
+            {
+                <li  data-id="navProducts" class="default-check">@(taskDescs.Find(m=>m.Mark==11).Name)</li>
+            }
+            //制版
+            else if(task.Mark==12)
+            {
+                <li  data-id="platemakingContent" class="default-check">@(taskDescs.Find(m=>m.Mark==12).Name)</li>
+            }
+            //发货
+            else if(task.Mark==15&&order.OrderType==1)
+            {
+                <li  data-id="navSendDYDoc" data-btn="btnSendDYOrder" class="default-check">@(taskDescs.Find(m=>m.Mark==15).Name)</li>
+            }
+            else if (task.Mark == 15 && order.OrderType == 2)
+            {
+                <li data-btn="btnSendOrder" data-id="navSendDoc" class="default-check">@(taskDescs.Find(m=>m.Mark==15).Name)</li>
+            }
+            //裁剪
+            else if (task.Mark == 13 && order.OrderType == 2)
+            {
+                <li data-btn="btnCutoutOrder" data-id="navCutoutDoc" class="default-check">@(taskDescs.Find(m=>m.Mark==13).Name)</li>
+            }
+            //车缝
+            else if (task.Mark == 14 && order.OrderType == 2)
+            {
+                <li data-btn="btnSewnOrder"  data-id="navSewnDoc" class="default-check">@(taskDescs.Find(m=>m.Mark==14).Name)</li>
+            }
+            //加工成本
+            else if(task.Mark==16)
+            {
+                 <li data-btn="addOtherCost" data-id="navCosts" class="default-check">@(taskDescs.Find(m=>m.Mark==16).Name)</li>
+            }
+           
+        }
+        @{
+            if(order.OrderType==2)
+            {
+                <li data-id="navGoods">下单明细</li>
+            }
+        }
+        <li data-id="orderTaskLogs">日志</li>
+    </ul>
+
+     @{
+         if (taskModel.IsRoot)
+         {
+             //裁剪
+            if (task.Mark == 13 && order.CutStatus != 2&&order.OrderType==2)
+            {
+                 <div class="btn part-btn right" id="btnCutoutOrder">@(taskDescs.Find(m=>m.Mark==13).Name)录入</div>  
+                 <div class="btn part-btn right mRight10" id="btnMaterialOrder">用料登记</div>                       
+            }
+            //车缝
+             else if (task.Mark == 14 && order.OrderType == 2)
+            {
+                <div class="btn part-btn right"  id="btnSewnOrder">@(taskDescs.Find(m=>m.Mark==14).Name)录入</div>
+            }
+            //发货
+             else if (task.Mark == 15 && order.OrderType == 1)
+            {
+                <div class="btn part-btn right" id="btnSendDYOrder">订单@(taskDescs.Find(m=>m.Mark==15).Name)</div>
+            }
+             else if (task.Mark == 15 && order.SendStatus != 2 && order.OrderType == 2)
+            {
+                <div class="btn part-btn right hide" id="btnSendOrder">订单@(taskDescs.Find(m=>m.Mark==15).Name)</div>
+            }
+            //加工成本
+            else if(task.Mark==16)
+            {
+                <div class="btn part-btn right" id="addOtherCost">添加@(taskDescs.Find(m=>m.Mark==16).Name)</div>
+            }
+        }
+     }
+    <div class="clear"></div>
+</div>

@@ -1,0 +1,79 @@
+﻿{%
+	var model = $data;
+%}
+<div class="add-cart-div">
+    <div class="image left">
+        <img id="productimg" src="{%=model.ProductImage%}" />
+    </div>
+    <div class="product-name left">
+        <h1 class="color999" style="background-color:#efefef;line-height:40px;text-indent:1em;margin-bottom:10px;">{%=model.ProductName%}</h1>
+        <div class="cart-attrs" id="saleattr">
+                <ul class="cart-attr-item salesattr">
+                    <li class="cart-attrkey">
+                        {%=(model.SaleAttrs.length == 1?model.SaleAttrs[0].AttrName+"：":"规格：")%}
+                    </li> 
+                    <li class="cart-attrValues">
+                        <ul style="max-height:160px; overflow-y:auto;">
+                            {%
+                            for(var ii=0, jj=model.ProductDetails.length; ii < jj; ii++){
+	                            var detail = model.ProductDetails[ii];
+                                if (model.ProductDetails.length > 1 &&detail.Description=="" && (detail.LogicOut == 0 && detail.StockOut == 0 && detail.StockIn == 0))
+                                {
+                                    continue;
+                                }
+                            %}
+                                    {%
+                                    if (model.SaleAttrs.length == 1)
+                                    {
+                                    %}
+                                        <li class="cart-value" data-id="{%=detail.ProductDetailID%}">
+                                        {%=(detail.Description=="" ? "默认规格" : detail.Description.replace('【', ' ').replace('】', ' ').replace(model.SaleAttrs[0].AttrName+":",' ').replace(model.SaleAttrs[0].AttrName+"：",' '))%}
+                                        </li>
+                                    {%}else{
+                                    %}
+                                        <li class="cart-value" data-id="{%=detail.ProductDetailID%}">
+                                            {%=(detail.Description=="" ? "默认规格" : detail.Description.replace(/\【/g, ' ').replace(/\】/g, ' '))%}
+                                       </li>
+                                    {%}%}
+                             </li>  
+                            {%}%}
+                        </ul>
+                    </li>
+                </ul>
+            <div class="clear"></div>
+            <ul class="cart-attr-item">
+                <li class="cart-attrkey">单位：</li>
+                <li class="cart-attrValues" id="small" data-id="{%=model.SmallUnit.UnitID%}">
+                    {%=model.SmallUnit.UnitName%}
+                </li>
+            </ul>
+            <ul class="cart-attr-item">
+                <li class="cart-attrkey">单价：</li>
+                <li id="price" class="cart-attrValues">
+                    {%=model.Price.toFixed(2)%}
+                </li>
+            </ul>
+            <ul class="cart-attr-item">
+                <li class="cart-attrkey">库存：</li>
+                <li id="productStockQuantity" class="cart-attrValues">
+                    0.00
+                </li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+
+        <div class="choose-div">
+            <div>
+                <div class="depot-dropdown left"></div>
+                <input maxlength="20" type="text" class="choose-quantity left mLeft10 mTop1" value="1" id="quantity" />
+                <label class="mLeft10 left mTop5">货位库存：</label><label class="mTop5 left" id="productDepotQuantity">0.00</label>  
+            </div>
+            <div class="clear"></div>
+            <div class="addcart mTop10 " id="addcart" >加入清单</div>
+            <div class="clear"></div>
+        </div>
+        
+    </div>
+</div>
+{% %}

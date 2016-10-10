@@ -1,0 +1,124 @@
+﻿@{
+    var taskModel = (YXERP.Models.TaskModel)ViewBag.TaskModel;
+    var plateItems = (List<IntFactoryEntity.CategoryItemsEntity>)ViewBag.plateMarkItems;
+    var task = taskModel.Task;
+    var order = taskModel.Order;
+    var productAttr = taskModel.ProductAttr;
+    var attrValues = productAttr.AttrValues == null ? "" : Html.ToJSONString(productAttr.AttrValues);
+    var taskDescs = (List<IntFactoryEntity.CategoryItemsEntity>)ViewBag.Modules;
+    ViewBag.Title = "任务详情" + "-" + task.Title;
+}
+
+@section css{
+<link href="/modules/css/task.css" rel="stylesheet" />
+}
+
+@section scripts{
+    <script src="/Scripts/jquery-1.11.1.js"></script>
+    <script src="/modules/plug/laydate/laydate.js"></script>
+    <script src="/modules/plug/e-smart-zoom-jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            seajs.use(["scripts/task/detail"], function (obj) {
+                obj.init('@attrValues', '@order.OrderImages', '@(taskModel.IsWarn ? 1 : 0)', '@Html.ToJSONString(task)', '@order.OriginalID', '@order.PlanTime.ToString("yyyy-MM-dd hh:mm:ss")', '@(task.Mark==12?Html.ToJSONString(plateItems):"")', '@(Html.ToJSONString(taskDescs))');
+            });
+        });
+    </script>
+}
+@{Html.RenderPartial("DetailBase", taskModel);}
+<input type="text" hidden="hidden" id="YXOrderID" class="hide" value="@order.YXOrderID"/>
+<input type="text"  id="GoodsID" hidden="hidden"class="hide" value="@order.GoodsID"/>
+<div class="taskContent" style="padding:0 0 60px 0;@(task.Mark==12||task.Mark==22?"padding-left:0;padding-right:0;":"")">
+    <div id="navTask" class="talk-body nav-partdiv">
+        <div class="mTop20 mLeft10" id="taskReplys"></div>
+        @{
+            if (task.Mark == 11 && order.OrderType == 1)
+            {
+                //打样材料
+                Html.RenderPartial("MaterialDetail", taskModel);
+            }
+            else if (task.Mark == 11 && order.OrderType == 2)
+            {
+                //大货材料
+                Html.RenderPartial("CargoMaterialDetail", taskModel);
+            }
+            else if (task.Mark == 12 && order.OrderType == 1)
+            {
+                //打样制版
+                Html.RenderPartial("PlateDetail", taskModel);
+            }
+            else if (task.Mark == 12 && order.OrderType == 2)
+            {
+                //大货制版
+                Html.RenderPartial("PlateDetail", taskModel);
+            }
+            else if (task.Mark == 15 && order.OrderType == 1)
+            {
+                //打样发货
+                Html.RenderPartial("SendDYDoc");
+            }
+            else if (task.Mark == 15 && order.OrderType == 2)
+            {
+                //大货发货
+                Html.RenderPartial("SendDoc");
+            }
+            else if (task.Mark == 13&&order.OrderType==2)
+            {
+                //大货裁片
+                Html.RenderPartial("CutoutDoc", taskDescs.Find(m => m.Mark == 13).Name);
+            }
+            else if (task.Mark == 14 && order.OrderType == 2)
+            {
+                //大货车缝
+                Html.RenderPartial("SewnDoc", taskDescs.Find(m => m.Mark == 14).Name);
+            }
+            //加工成本
+            if (task.Mark == 16)
+            {
+                Html.RenderPartial("ProcessCostDoc");
+            }
+        }
+        @{
+            if (order.OrderType == 2)
+            {
+                <div id="navGoods" class="nav-partdiv hide">
+                    <table class="table-items-detail mTop20">
+                        <tr class="table-header">
+                            <td class="width200"></td>
+                            <td class="width200">下单数量</td>
+                            <td class="width200">@(taskDescs.Find(m=>m.Mark==13).Name)数量</td>
+                            <td class="width200">@(taskDescs.Find(m=>m.Mark==14).Name)数量</td>
+                            <td class="width200">发货数量</td>
+                            <td class="width200">剩余未发</td>
+                        </tr>
+                    </table>
+                </div>
+            }
+        }
+        <div id="orderTaskLogs" class="mTop15 hide"></div>
+    </div>
+</div>
+
+<ul class="dropdown-ul hide" id="setPlateInfo" style="width:100px;">
+    <li id="btn-setNormalColumn">设为标码</li>
+    <li id="btn-removeColumn">删除此列</li>
+</ul>
+@{  
+    //车缝退回
+    if (task.Mark == 14 && order.OrderType == 2){
+        <ul class="dropdown-ul hide" id="setReturnSewn" style="width:100px;">
+            <li id="btnSaveSwen">退回</li>
+        </ul>
+    }
+}
+<div class="enlarge-image-bgbox hide">
+    <div class="close-enlarge-image iconfont">&#xe606;</div> 
+    <span id="zoomInButton" class="zoom-botton iconfont mRight50">&#xe642;</span>
+    <span id="zoomOutButton" class="zoom-botton iconfont">&#xe641;</span>
+</div>
+
+<div id="pageContent" class="enlarge-image-box hide">
+    <div class="left-enlarge-image"></div>
+    <div class="right-enlarge-image"></div>
+    <div class="enlarge-image-item"></div>
+</div>

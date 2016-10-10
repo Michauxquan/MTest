@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "新建报溢单";
+    var ware = (List<IntFactoryEntity.WareHouse>)ViewBag.Ware;
+    var product= (List<IntFactoryEntity.ProductDetail>)ViewBag.Items;
+}
+
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/stock/createoverflow"], function (obj) {
+            obj.init('@(ViewBag.guid)', '@(Html.ToJSONString(ware))');
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">新建报溢单</span>
+    <div class="btn-add right mLeft20" id="btnChooseProduct">快捷选择材料</div>
+    <a class="right font14 mTop4 btn-link" href="/Stock/ChooseBYProducts" id="addChooseProduct">选择报溢材料</a>
+    <div class="clear"></div>
+</div>
+<div class="content-body mTop20">
+    <table class="table-items-detail">
+        <tr class="table-header tr-header">
+            <td class="tLeft">材料名称</td>
+            <td class="">材料编码</td>
+            <td class="">规格</td>
+            <td class="">数量</td>
+            <td class=" width80">删除</td>
+        </tr>
+        @if (product.Count > 0)
+        {
+            foreach (var model in product)
+            { 
+            <tr class="item cart-item" data-autoid="@(model.AutoID)" data-id="@(model.ProductDetailID)" >
+                <td class="tLeft bBottom"><a href="/Products/ChooseDetail?pid=@(model.ProductID)&did=@(model.ProductDetailID)" target="_blank">@(model.ProductName)</a></td>
+                <td class="bBottom"><a href="/Products/ChooseDetail?pid=@(model.ProductID)&did=@(model.ProductDetailID)" target="_blank">@(model.ProductCode)</a></td>
+                <td class="bBottom">@(model.Description)</td>
+                <td class="tr-quantity bBottom"><input maxlength="20" type="text" data-id="@(model.AutoID)" data-value="@(model.Quantity)" class="quantity width50" value="@(model.Quantity)" /></td>
+                <td class="bBottom">
+                    <a class="ico-del iconfont font20" href="javascript:void(0)" title="删除" data-id="@(model.AutoID)"></a>
+                </td>
+            </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="5"><div class="nodata-txt">暂无材料</div></td></tr>            
+        }
+    </table>
+    <div class="mTop20" style="padding:0px 20px 50px 20px;">
+        <div class="right hide" id="chooseWare"></div>
+        <div class="clear"></div>
+        <textarea maxlength="1000" placeholder="备注" id="remark" class="width500 mTop10 right"></textarea>
+        <div class="clear"></div>
+        <div class="mTop20">
+            <div class="btn right" id="btnconfirm">提交报溢单</div>
+        </div>
+    </div>
+</div>

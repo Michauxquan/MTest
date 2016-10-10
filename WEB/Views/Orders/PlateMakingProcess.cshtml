@@ -1,0 +1,241 @@
+﻿@{
+    var order = (IntFactoryEntity.OrderEntity)ViewBag.Model;
+    var goods = (List<IntFactoryEntity.GoodsDoc>)ViewBag.List;
+    var currentUser=(IntFactoryEntity.Users)Session["ClientManager"];
+    string[] orderImages = order.OrderImages.Trim(',').Split(',');
+    if(orderImages.Length==1){
+        orderImages = new string[] { orderImages[0], string.Empty };
+    }
+    if(orderImages.Length==0){
+        orderImages = new string[] { string.Empty, string.Empty };
+    }
+    
+    ViewBag.title = "制版工艺单";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-language" content="zh-CN" />
+	<meta name="author" content="zuroke" />
+    <title>@ViewBag.title</title>
+    <link href="/modules/css/default/layout.css" rel="stylesheet" />
+    <link href="/modules/css/base.css" rel="stylesheet" />
+    <link href="/modules/css/order/platemakingprocess.css" rel="stylesheet" />
+    <link href="/modules/css/iconfont/iconfont.css" rel="stylesheet" />
+
+    <script src="/modules/plug/doT.js"></script>
+    <script src="/Scripts/jquery-1.11.1.js"></script>    
+    <script src="/Scripts/sea.js"></script>
+    <script src="/Scripts/sea-config.js"></script>
+    
+    <script type="text/javascript">
+        seajs.use(["scripts/orders/platemakingprocess"], function (obj) {
+            obj.init('@(order.Platemaking)', "@(order.OrderID)", "@(order.OriginalID)", "@(order.OrderType)", '@Html.ToJSONString(order)');
+        });        
+    </script>
+</head>
+<body>
+    <div class="report">                
+        <div class="process left mBottom30">
+            <table class="head-table" style="width:955px;">
+                <tr class="head" style="height:50px">                   
+                    <td class="no-border-left" colspan="6" style="border-right:1px solid #000;">
+                        <div class="titlename">
+                            @(currentUser.Client.CompanyName)生产工艺单                            
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td>                        
+                        <table class="no-border img-order ">
+                            <tr>
+                                <td class=" no-border-left no-border-top">前片图片</td>
+                                <td class=" no-border-right no-border-top">后片图片</td>
+                            </tr>
+                            <tr id="img">
+                                <td class="no-border-left order-image" id="OneImgBox">
+                                    <div id="img-one">
+                                        <img src="@(string.IsNullOrEmpty(orderImages[0])?"/modules/images/none-img.png":orderImages[0])" />
+                                    </div>
+                                    <div id="upLoadOneImg" class="layer-upload iconfont btn">&#xe60b;</div>                        
+                                </td>
+                                <td class="order-image no-border-right" id="TwoImgBox">
+                                    <div id="img-two">
+                                        <img src="@(string.IsNullOrEmpty(orderImages[1])?"/modules/images/none-img.png":orderImages[1])" />
+                                    </div>
+                                    <div id="upLoadTwoImg" class="layer-upload btn iconfont">&#xe60b;</div>                        
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table class="no-border order-information" style="width:310px;">
+                            <tr>
+                                <td class="width100" >款号：</td>
+                                <td style="overflow: hidden;text-overflow: ellipsis;max-width:200px">@(order.IntGoodsCode==""?order.OrderCode:order.IntGoodsCode)</td>
+                            </tr>
+                            <tr>
+                                <td>采购负责人：</td>
+                                <td>
+                                    <input class="input" type="text" value="" />
+                                    <i class="iconfont blue change-owner hand">&#xe60b;</i>
+                                    <div class="clear"></div>
+                                    <span class="span hide"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>销售负责人：</td>
+                                <td>
+                                    <input class="input" type="text" value="" />
+                                    <i class="iconfont blue change-owner hand">&#xe60b;</i>
+                                    <div class="clear"></div>
+                                    <span class="span hide"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>纸样师负责人：</td>
+                                <td>
+                                    <input class="input" type="text" value="" />
+                                    <i class="iconfont blue change-owner hand">&#xe60b;</i>
+                                    <div class="clear"></div>
+                                    <span class="span hide"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>理单负责人：</td>
+                                <td>
+                                    <input class="input" type="text" value="" />
+                                    <i class="iconfont blue change-owner hand">&#xe60b;</i>
+                                    <div class="clear"></div>
+                                    <span class="span hide"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="no-border-bottom">QC负责人：</td>
+                                <td class="no-border-bottom">
+                                    <input class="input" type="text" value="" />
+                                    <i class="iconfont blue change-owner hand">&#xe60b;</i>
+                                    <div class="clear"></div>
+                                    <span class="span hide"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>                
+                    <td>
+                        <table class="time-order no-border" style="height:180px;width:234px;">
+                            <tr>
+                                <td style="height:30px;">下单日期：</td>
+                                <td class="no-border-right">@(order.OrderTime.ToString("yyyy-MM-dd"))</td>
+                            </tr>
+                            <tr>
+                                <td style="height:30px;">合同货期：</td>
+                                <td class="no-border-right">@(order.PlanTime.ToString("yyyy-MM-dd") == "0001-01-01" ? "未设置" : order.PlanTime.ToString("yyyy-MM-dd"))</td>
+                            </tr>
+                            <tr>
+                                <td class="no-border-right"><div style="height:110px;font-size:14px; ">准确资料签章：</div></td>       
+                                <td class="no-border-left no-border-right"></td>       
+                            </tr>
+                        </table>
+                    </td>                     
+                </tr>
+            </table>   
+            @if (order.OrderType==2)
+            {
+                <table class="navgoods no-border left" data-id="navgoods">
+                    <tr>
+                        <td rowspan="2" class="head no-border-top bo-border-bottom pLeft10 tLeft" 
+                            style="width:95px"><i class="iconfont icon-delete information">&#xe613;</i>下单明细</td>
+                    </tr>
+                    <tr>
+                        <td class="no-border-top no-border-bottom plate-list"></td>  
+                    </tr> 
+                </table>  
+            }            
+            <div class="clear"></div>
+            <table class="navproducts no-border" data-id="navproducts">
+                <tr>
+                    <td rowspan="@(order.Details.Count+2)" class="no-border-top tLeft head pLeft10"
+                         style="width:95px;"><i class="iconfont icon-delete information">&#xe613;</i>物料信息</td>
+                </tr>
+                <tr class="head">                    
+                    <td class=" width80">材料名称</td>
+                    <td class=" width80">编码</td>
+                    <td class=" width70" colspan="2">规格</td>
+                    <td class=" width70">单位</td>
+                    <td class=" width80">消耗量</td>
+                    <td class=" width80">损耗量</td>
+                    <td class=" width100">采购量</td>
+                    <td class="">材料使用说明</td>
+                </tr>
+                @if (order.Details.Count>0)
+                {
+                    foreach (var detail in order.Details)
+                    {
+                        <tr class="products">
+                            <td>@(detail.ProductName)</td>
+                            <td>@(detail.DetailsCode!="" ? detail.DetailsCode: detail.DetailsCode==""?detail.ProductCode:"--")</td>
+                            <td colspan="2">@(detail.Remark==""?"--":detail.Remark)</td>
+                            <td>@(detail.UnitName)</td>
+                            <td>@((detail.Quantity * order.PlanQuantity).ToString("f3"))</td>
+                            <td>@((detail.Loss * order.PlanQuantity).ToString("f3"))</td>
+                            <td>@(((detail.Quantity * order.PlanQuantity)+(detail.Loss * order.PlanQuantity)).ToString("f3"))</td>
+                            <td class="center" style="max-width:300px;">
+                                <textarea class="input" onpropertychange="this.style.height=this.value.split('\n').length*20 + 'px';this.style.height=this.scrollHeight + 'px';" oninput="this.style.height=this.value.split('\n').length*20 + 'px';this.style.height=this.scrollHeight + 'px';" class="textarea" style="width:92%;min-height:18px;vertical-align:middle;height:18px;
+line-height:18px !important;border-color:#666"></textarea>                                
+                                <span class="span hide"></span>
+                            </td>
+                        </tr>
+                    }
+                    
+                }
+                else
+                {
+                    <tr><td colspan="11"><div class="nodata-txt"></div></td></tr>
+                }           
+            </table>    
+                              
+            <table class="navengraving no-border" data-id="navengraving" style="width:955px;">                
+                <tr>
+                    <td class="no-border-top tLeft head pLeft10" style="width:95px;"><i class="iconfont icon-delete information ">&#xe613;</i>尺寸信息</td>
+                    <td id="Platemak" class="no-border-top" colspan="10"></td>
+                </tr>
+            </table>  
+           
+            <table class="processplate no-border" style="width:955px">
+                <tr>
+                    <td class="no-border-top head tLeft pLeft10" style="width:95px;">工艺</td>
+                    <td class="no-border-top head width50">图标</td>
+                    <td colspan="2" class="no-border-top head width50 tLeft pLeft5">名称</td>
+                    <td colspan="4" class="no-border-top head">描述</td>
+                </tr>                
+            </table>  
+            <table style="width:955px" class="remark no-border">
+                <tr>
+                    <td colspan="10"  class="font14 no-border-top tLeft head pLeft30">备注</td>
+                </tr>
+                <tr>
+                    <td colspan="10" style="padding:5px;">
+                        <textarea class="input" onpropertychange="this.style.height=this.value.split('\n').length*20 + 'px';this.style.height=this.scrollHeight + 'px';" oninput="this.style.height=this.value.split('\n').length*20 + 'px';this.style.height=this.scrollHeight + 'px';" class="textarea" style="width:95%;min-height:20px;height:24px;line-height:20px;min-height:100px;vertical-align:middle;margin:10px;box-sizing:border-box;"></textarea>                                
+                        <div class="span hide" style="text-align:left;padding-left:25px;"></div>
+                    </td>
+                </tr>
+            </table> 
+        </div>
+
+        <div class="btn-ok" style="cursor:pointer;width:1100px;" title="预览">
+            <i class="iconfont font22 mLeft20">&#xe605;</i>
+            <span class="mTop22 font14">预览</span>
+        </div>
+
+        <div class="operation hide">
+            <span class="iconfont font24 mLeft20 color666 left printico" style="cursor:pointer;">&#xe658;</span>
+            <span class="iconfont font18 mLeft20 color666 get-back" style="cursor:pointer;position:absolute"><i class="iconfont mRight5">&#xe62d;</i><span class="font14">返回</span></span>
+        </div>
+    </div>
+</body>
+</html>

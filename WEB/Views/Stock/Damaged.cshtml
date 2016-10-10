@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "材料消耗列表";
+}
+@section css{
+    <link href="/modules/plug/daterangepicker/daterangepicker.css" rel="stylesheet" />
+}
+@section scripts{
+    <script src="/Scripts/jquery-1.11.1.js"></script>
+    <script src="/modules/plug/laydate/laydate.js"></script>
+    <script type="text/javascript">
+        seajs.use(["scripts/stock/damaged"], function (obj) {
+            obj.init('@Html.ToJSONString((List<IntFactoryEntity.WareHouse>)ViewBag.Wares)');
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">材料消耗列表</span>
+    <a href="javascript:void(0);" id="btnCreate" class="btn-add mLeft20 right">提交消耗单（@(ViewBag.DamagedCount )）</a>
+    <a class="btnccc right" href="/Stock/ChooseBSProducts">选择材料</a>
+</div>
+<div class="search-box">
+    <div class="search-header">
+        <ul class="search-tab search-status">
+            <li data-id="-1" class="hover">全部</li>
+            <li data-id="0" class="">待审核</li>
+            <li data-id="2" class="">已审核</li>
+        </ul>
+        
+    </div>
+</div>
+<div class="content-body">
+    <div class="search-items">
+        @*<div id="wares" class="left"></div>*@
+        <div class="left">
+            <input placeholder="消耗日期" type="text" id="iptCreateTime" class="ipt-date hand" readonly="true" />
+        </div>
+        <div class="right searth-module" data-text="材料消耗单号搜索..." data-width="160"> </div> 
+    </div>
+    <table class="table-items-detail">
+       <tr class="table-header tr-header">
+            <td class="tLeft">消耗单号</td>
+            <td>编码</td>
+            <td>货位</td>
+            <td>数量</td>
+            <td class="">操作人</td>
+            <td class="">申请日期</td>
+            <td class="">状态</td>
+        </tr>
+    </table>
+    <div class="mTop20" id="pager"></div>
+</div>
+<ul class="dropdown-ul hide" style="width:65px;">
+    <li class="@(ExpandClass.IsLimits(HttpContext.Current,"103030302"))" id="audit">审核</li>
+    <li class="@(ExpandClass.IsLimits(HttpContext.Current,"103030304"))" id="delete">删除</li>
+</ul>

@@ -1,0 +1,76 @@
+﻿@{
+    var taskModel = (YXERP.Models.TaskModel)Model;
+    var task = taskModel.Task;
+    var order = taskModel.Order;
+    var isRoot = taskModel.IsRoot;
+ }
+
+<div class="platemakingContent hide" id="platemakingContent">
+    <div class="talk-title" style="font-size:16px; color:#333; text-indent:10px;" >
+        制版信息
+        <a class="right mRight10" href="/Orders/PlateMakingProcess/@order.OrderID" target="_blank" id="btn-platePrint" title="打印制版工艺">
+            <span class="iconfont">&#xe658;</span>
+        </a>
+        <div class="clear"></div>
+    </div>
+
+    <div id="platemakingBody" class="mTop10 platemakingBody" style="margin:0 10px;" >
+    @{
+        if (!string.IsNullOrEmpty(order.Platemaking))
+        {
+            <script type="text/javascript">
+                document.getElementById("platemakingBody").innerHTML = decodeURI('@(order.Platemaking)');
+            </script>   
+        }
+        else
+        {
+            <script type="text/javascript">
+                document.getElementById("platemakingBody").style.display = "none";
+            </script>   
+        }
+    }
+    </div>
+            
+    @{
+      if (isRoot)
+        {
+            var hasPlate = !string.IsNullOrEmpty(order.Platemaking);
+            if (!hasPlate)
+            {
+                <div class="create-first" id="btn-initAddTaskPlate">
+                    <span class="plus">+</span>
+                    添加制版
+                </div>
+            }
+            <div class="btn right mTop10 mRight10" style="display:@(hasPlate?"block":"none")"  id="btn-updateTaskRemark">编辑制版</div>
+            <div class="left btn-add mTop10 mLeft10" style="display:@(hasPlate?"block":"none")" id="btn-addColumn">
+                添加制版
+            </div>
+        }
+    }
+    <div class="clear"></div>
+
+    @{
+        <div class="mTop30 plate">
+            <div class="talk-title" style="font-size:16px; color:#333; text-indent:10px;" >
+                工艺说明
+                @if (isRoot)
+                {
+                    <div class="right btn-add mRight10" style="text-indent:0px;" id="addPlateType">选择工艺类型</div>
+                } 
+            </div>
+            
+            <div class="clear"></div>
+            <table class="table-items-detail mTop10 tb-plates"></table>
+        </div>
+    }
+</div>
+
+@if (isRoot)
+{
+    <ul class="dropdown-ul hide" id="setPlateMaking" style="width:65px;">
+        <li id="setObjectPlate">编辑</li>
+        <li id="deleteObject">删除</li>
+    </ul> 
+}  
+

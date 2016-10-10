@@ -1,0 +1,33 @@
+﻿{%
+for(var i=0;i<$data.length;i++)
+{
+	    var item = $data[i];
+        var extension=item.name.split('.');
+        var extensionName=extension[extension.length-1];
+    
+        var attachmentUrl="/modules/images/"+(
+                                             extensionName=="pdf"?"ico-attachment-pdf.png":
+                                             extensionName=="ppt"?"ico-attachment-ppt.png":
+                                             extensionName=="psd"?"ico-attachment-psd.png":
+                                             extensionName=="txt"?"ico-attachment-txt.png":
+                                             extensionName=="xls"||extensionName=="xlsx"?"ico-attachment-excel.png":
+                                             extensionName=="rar"||extensionName=="zip"?"ico-attachment-rar.png":
+                                             extensionName=="doc"||extensionName=="docx"?"ico-attachment-word.png":""
+                                             );
+%}
+        <li id="li_{%=item.id%}" data-isimg="2">
+            <div class="upload-lump left" style="top:5px;background:url('{%=attachmentUrl%}') no-repeat;"> 
+            </div>
+            <div class="information left mLeft20 width120">
+                <span title="{%=item.name%}" class="long width100">{%=item.name%}</span>
+                <span class="progress-file center" style="overflow:hidden;width:100%;position:relative;border:1px solid #ccc;height:14px;line-height:14px;display:block;border-radius:3px;">
+                    <span class="run-progress mark-progress" style="display:block;background-color:#efefef;width:0;height:14px;position:absolute;left:0;top:0;"></span>
+                    <span class="progress-number mark-progress" style="position:relative;z-index:10;">0%</span>
+                </span>
+                <div class="clear"></div>
+                <span class="file-size hide">{%=item.size/1024/1024<1?(item.size/1024).toFixed(2)+"KB":(item.size/1024/1024).toFixed(2)+"MB"%}</span>
+            </div>
+            <div class="clear"></div>
+            <span class="ico-delete-file qn-delete iconfont hide">&#xe628;</span>
+        </li>
+{%}%}

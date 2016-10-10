@@ -1,0 +1,84 @@
+﻿{%
+    for(var i=0;i<$data.length;i++)
+    {
+        var item=$data[i];
+    if(i>0){
+    %}
+%}
+<tr class="line-item">
+    <td></td>
+</tr>
+{%}%}
+<tr class="item-header">
+    <td class="tLeft">规格</td>
+    <td>数量</td>
+    {%if(item.DocType==11){%}
+    <td class="tLeft btn-swen-box-{%=item.DocID%}">
+        退回数
+    </td>
+    {%}%}
+    <td>小计</td>
+    <td>登记时间</td>
+    <td>操作人</td>
+    <td>登记人</td>
+    <td class="">
+        操作
+        {%if(item.DocType==11){%}
+        <div class="iconfont dropdown right" data-status="0"><span data-id="{%=item.DocID%}" class="ico-dropdown mTop3" style="display:block;"></span></div>
+        <div class="clear"></div>
+        {%}%}
+    </td>
+</tr>
+{%
+for(var j=0;j<item.Details.length;j++)
+{
+    var detail=item.Details[j];
+%}
+<tr class="item" data-id="{%=detail.GoodsDetailID%}">
+    <td class="tLeft bBottom">
+        {%=detail.Remark%}
+    </td>
+    <td class="center bBottom swen-total"">
+        {%=detail.Quantity%}
+    </td>
+    {%if(item.DocType==11){%}
+    <td class="tLeft bBottom input-swen-box-{%=item.DocID%}">
+        <div class="mLeft2 left mTop4">{%=detail.ReturnQuantity%}</div>
+    </td>
+    {%}%}
+    {%
+    if(j==0)
+    {
+        if(item.DocType==11){
+            var total=item.Quantity;
+            for(var k=0;k<item.Details.length;k++)
+            {
+                var quantity=item.Details[k].ReturnQuantity;
+                total-=quantity;
+            }
+        }
+    %}
+    <td class="center bBottom bLeft cut1" data-quantity="{%=item.Quantity%}" rowspan="{%=item.Details.length%}">
+        {%=item.DocType==11?total:item.Quantity%}
+    </td>
+    <td class="center bBottom bLeft" rowspan="{%=item.Details.length%}">
+        {%=item.CreateTime.toDate('yyyy-MM-dd hh:mm:ss')%}
+    </td>
+    <td class="center bBottom bLeft" rowspan="{%=item.Details.length%}">
+        {%=item.Owner.Name%}
+    </td>
+    <td class="center bBottom bLeft" rowspan="{%=item.Details.length%}">
+        {%=item.CreateUser.Name%}
+    </td>
+    <td class="center bBottom bLeft" rowspan="{%=item.Details.length%}"><a href="/Orders/DocDetail/{%=item.DocID%}" target="_blank">查看详情</a></td>
+    {%}%}
+</tr>
+{%}%}
+{%}%}
+<tr class="line-item">
+    <td colspan="6"></td>
+</tr>
+<tr class="item">
+    <td colspan="1"></td>
+    <td class="center font16">合计：<span class="total-count font16"></span></td>
+</tr>

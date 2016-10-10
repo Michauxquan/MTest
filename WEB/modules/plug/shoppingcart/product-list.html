@@ -1,0 +1,35 @@
+﻿<tr class="tr-header">
+    <td>材料名称</td>
+    <td>规格</td>
+    <td style="width:60px;" class="center">单位</td>
+    <td style="width:60px;" class="center">数量</td>
+    <td class="tRight">小计</td>
+    <td style="width:80px;" class="center">删除</td>
+</tr>
+<tr class="line">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+{%
+	for(var i=0, j=$data.length; i < j; i++){
+	var item = $data[i];
+%}
+<tr class="item">
+    <td>
+        <p class="long productname" style="width:200px;" target="_blank">
+         {%=item.ProductName%}
+        </p>
+    </td>
+    <td>{%=item.Description%}</td>
+    <td class="center">{%=item.UnitName%}</td>
+    <td class="center">{%=item.Quantity.toFixed(2)%}</td>
+    <td class="tRight amount">{%=(item.Price*item.Quantity).toFixed(2)%}</td>
+    <td class="center">
+        <a class="ico-del iconfont font20 hRed" href="javascript:void(0)" title="删除" data-id="{%=item.AutoID%}"></a>
+    </td>
+</tr>
+{% } %}

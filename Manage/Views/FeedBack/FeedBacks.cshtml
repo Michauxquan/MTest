@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "意见反馈";
+}
+@section css{
+    <link href="/modules/plug/daterangepicker/daterangepicker.css" rel="stylesheet" />
+    }
+@section scripts{
+<script src="/Scripts/jquery-1.11.1.js"></script>
+<script src="/modules/plug/laydate/laydate.js"></script>
+    <script type="text/javascript">
+        seajs.use(["scripts/feedback/feedback"], function (feedback) {
+            feedback.init();
+        }); 
+    </script>
+}
+
+<div class="header-box">
+    <span class="header-title">意见反馈</span>
+</div>
+
+<div class="search-header mTop20">
+    <ul class="search-tab search-status">
+        <li class="hover"  data-index="-1">所有</li>
+        <li data-index="1">待解决</li>            
+        <li data-index="2">已解决</li>
+        <li data-index="3">驳回</li>
+        <li data-index="4">删除</li>
+    </ul>  
+</div>
+<div class="content-body">
+    <div class="search-body">
+        <div class="left">
+            <input type="text" id="feedBeginTime" placeholder="请选择时间段"  class="ipt-date" />
+        </div> 
+        <div id="FeedTypes" class="left mLeft5"></div>
+         
+        <div class="right searth-module" data-text="输入关键字..." data-width="150"></div>
+        <div class="clear"></div>
+    </div>
+
+    <table class="table-list">
+        <tr class="tr-header">           
+            <td class="tLeft">标题</td>
+            <td class="">类型</td>
+            <td class="">状态</td>
+            <td class="">联系人</td>
+            <td class="">电话</td>
+            <td class="">创建时间</td>
+            <td class="width80">操作</td>
+        </tr>
+    </table>
+
+     <div id="pager" class="mTop20"></div>
+</div>

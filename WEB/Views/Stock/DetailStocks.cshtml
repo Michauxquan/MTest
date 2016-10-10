@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "材料库存明细";
+}
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/stock/detailstocks"], function (ObjectJS) {
+            ObjectJS.init();
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">材料库存明细</span>
+</div>
+<div class="content-body">
+     <div class="search-items mTop10">
+        <div class="left" id="wares"></div>
+        <div class="right searth-module" data-text="材料编码/名称搜索..." data-width="200"> </div>
+    </div>
+    <table class="table-list mTop10">
+        <tr class="tr-header">
+            <td class="tLeft">材料编码</td>
+            <td class="tLeft">材料名称</td>
+            <td class="tLeft">子规格编码</td>
+            <td class="tLeft">材料规格</td>
+            <td class="tLeft">货位</td>
+            @*<td class="tLeft">仓库</td>
+            <td class="tLeft">批次</td>*@
+            <td class="width200">采购数量</td>
+            <td class="width200">使用数量</td>
+            <td class="width200">结余库存</td>
+        </tr>
+    </table>
+    <div id="pager" class="mTop20"></div>
+</div>
+

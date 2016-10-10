@@ -1,0 +1,19 @@
+﻿{%
+	for(var i=0, j=$data.length; i < j; i++){
+	var item = $data[i];
+%}
+<tr class="list-item">
+    <td>
+        <a href="/Products/ChooseDetail?pid={%=item.ProductID%}&did={%=item.ProductDetailID%}" target="_blank">{%=item.ProductCode%}</a>
+    </td>
+    <td>
+        <a href="/Products/ChooseDetail?pid={%=item.ProductID%}&did={%=item.ProductDetailID%}" target="_blank">{%=item.ProductName%}</a>
+    </td>
+    <td>{%=item.DetailsCode%}</td>
+    <td>{%=item.Description%}</td>
+    <td>{%=item.DepotCode%}</td>
+    <td class="center">{%=item.StockIn%}</td>
+    <td class="center">{%=item.StockOut%}</td>
+    <td class="center">{%=(item.StockIn-item.StockOut).toFixed(2)%}</td>
+</tr>
+{% } %}

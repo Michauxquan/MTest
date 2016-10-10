@@ -1,0 +1,15 @@
+﻿<ul class="order-imgs-list pBottom20 order-imgs-box left" id="order-imgs-box" style="min-width:220px;">
+{%
+	for(var i=0, j=$data.length; i < j; i++){
+	var item = $data[i];
+    if(item){
+%}
+    <li><img src="{%=item%}" /><span class="ico-delete"></span></li>
+{% }} %}
+</ul>
+<div class="left mTop5">
+    <span title="添加图片" id="addOrderImages" class="edit-orderimages">
+        +
+    </span>
+</div>
+<div class="clear"></div>

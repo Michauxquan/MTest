@@ -1,0 +1,47 @@
+﻿
+/*选择下属插件样式*/
+.choosebranch-module { position: relative; height:28px; border:solid 1px #ccc; border-radius:2px; cursor:pointer; }
+.choosebranch-module .choosebranch-text { height:28px; line-height:28px; margin-left:5px; color:#666; }
+.choosebranch-module .choosebranch-ico { height:16px; width:16px; position:absolute; top:10px; right:5px; }
+
+.choosebranch-module .choosebranch-ico .top { border-top:solid 6px #ccc; border-left:solid 6px transparent ;border-right:solid 6px transparent;
+                                      position:absolute; }
+.choosebranch-module .choosebranch-ico .bottom { border-top:solid 6px #fff; border-left:solid 6px transparent ;
+                                    border-right:solid 6px transparent; position:absolute; top:-2px; left:0; }
+
+.choosebranch-module:hover { border:solid 1px #318ae4; }
+.choosebranch-module:hover .choosebranch-text { color:#318ae4; }
+.choosebranch-module:hover .top{ border-top-color:#318ae4; }
+
+.choosebranch-module.hover { border:solid 1px #318ae4; }
+.choosebranch-module.hover .choosebranch-text { color:#318ae4; }
+.choosebranch-module.hover .top{ border-top-color:#318ae4; }
+
+.default-item { height:25px; line-height:25px; text-indent:5px; cursor:pointer; }
+.default-item:hover { background-color:#eee; }
+
+/*结构样式*/
+.choosebranch-items-modules { padding-bottom:10px; border-bottom:solid 1px #ccc; border:solid 1px #ccc; position:absolute; background-color:#fff; z-index:1001; }
+
+.choosebranch-items { max-height:200px; overflow-y:auto; padding-bottom:10px; }
+
+.choosebranch-items-modules .branchitem { height:26px; white-space:nowrap;}
+.choosebranch-items-modules .branchitem .name{ height:26px; line-height:26px; cursor:pointer; display:inline-block; padding:0 5px; }
+.choosebranch-items-modules .branchitem .name:hover{ color:#4a98e7; background-color:#eee; }
+
+
+.choosebranch-items-modules .icoopen,.choosebranch-items-modules  .icoclose { display:inline-block; background-size:cover; width:20px; height:20px; margin-top:5px; cursor:pointer; margin-left:-23px;}
+.choosebranch-items-modules .icoopen{ background:url('/modules/images/ico-tree-open.png') no-repeat; }
+.choosebranch-items-modules .icoclose{ background:url('/modules/images/ico-tree-pull.png') no-repeat; }
+
+.choosebranch-items-modules .leftline, .choosebranch-items-modules .lastline, .choosebranch-items-modules .line { background-size:cover; display:inline-block; width:30px; height:26px;}
+.choosebranch-items-modules .leftline{ background:url('/modules/images/ico-tree-full.png') no-repeat -5px; }
+.choosebranch-items-modules .lastline{ background:url('/modules/images/ico-tree-last.png') no-repeat -5px;}
+.choosebranch-items-modules .line{ background:url('/modules/images/ico-tree-line.png') no-repeat -5px; }
+.choosebranch-items-modules .null{ display:inline-block; width:30px; height:26px;}
+
+.choosebranch-teams { border-top:solid 1px #eee; padding-top:10px; }
+.choosebranch-teams li { height:25px; line-height:25px; text-indent:5px; cursor:pointer; }
+.choosebranch-teams li:hover { background-color:#eee;}
+
+

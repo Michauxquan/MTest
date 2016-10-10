@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "材料列表";
+}
+
+<link rel="stylesheet" href="/modules/css/shoppingcart/filterproducts.css" />
+
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/products/product"], function (obj) {
+            obj.initList();
+        });
+    </script>
+}
+
+<div class="header-box">
+    <span class="header-title left">材料列表</span>
+    <a href="ProductAdd" class="btn-add right @(ExpandClass.IsLimits(HttpContext.Current,"103010500"))">添加材料</a> 
+</div>
+<div class="content-body mTop20">
+    <div class="top-div">
+        <ul class="category-map left">
+            <li data-id=""><a href="javascript:void(0);">全部分类</a></li>
+        </ul>
+        <div class="right mRight20 searth-module" data-text="输入材料名称/编码" data-width="200"> </div>
+    </div>
+    <div class="search-body">
+        <ul class="category-child attr-item">
+            <li class="attrkey">分类：</li>
+            <li class="attrValues">
+                <ul id="category-child">
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="filter-orderby">
+        <div class="left" id="prodiver"></div>
+    </div>
+    <ul class="search-sort">
+        <li>排序</li>
+        <li class="sort-item hover" data-column="p.CreateTime">
+            日期
+            <span class="asc"></span>
+            <span class="desc hover"></span>
+        </li>
+        <li class="sort-item" data-column="p.Price">
+            价格
+            <span class="asc"></span>
+            <span class="desc"></span>
+        </li>
+        <li style="padding-right:10px;">
+            <input type="text" id="beginprice" />&nbsp;-&nbsp;
+            <input type="text" id="endprice" />
+        </li>
+        <li class="search-btn" style="padding:0;margin-top:7px;">
+            <span class="btn" id="searchprice">搜索</span>
+        </li>
+    </ul>
+    <div class="clear"></div>
+    <table class="table-list mTop20">
+        <tr class="tr-header" id="product-items">
+            <td class="tLeft"></td>
+            <td class="tLeft">材料名称</td>
+            <td class="m-len tLeft">材料编码</td>
+            <td class="m-len">价格/单位</td>
+            <td class="m-len">是否启用</td>
+            <td class="m-len">公开状态</td>
+            <td class="m-len tLeft">分类名称</td>
+            <td class="m-len tLeft">供应商</td>
+            <td class="s-len">编辑</td>
+        </tr>
+    </table>
+    <div id="pager" class="mTop20" style="margin-right:20px !important;"></div>
+</div>

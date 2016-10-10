@@ -1,0 +1,202 @@
+﻿@{
+    Layout = null;
+    var model = (IntFactoryEntity.Manage.Clients)ViewBag.Model;
+    var categoryItems = (List<IntFactoryEntity.Category>)ViewBag.Items;
+}
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-language" content="zh-CN" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+	<title>智能工厂-在线下单</title>
+    <link href="/modules/css/base.css" rel="stylesheet" />
+    <link href="/modules/css/default/layout.css" rel="stylesheet" />
+    <link href="/modules/css/default/order_create.css" rel="stylesheet" />
+    <link href="/modules/css/iconfont/iconfont.css" rel="stylesheet" />
+    <link href="/modules/plug/laydate/need/laydate.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-1.11.1.js"></script>
+    <script src="/Scripts/sea.js"></script>
+    <script src="/Scripts/sea-config.js"></script>
+    <script src="/modules/plug/laydate/laydate.js"></script>
+    
+</head>
+
+<body>
+<!--页头-->
+<div class="pay-title pay-body row">
+    <div class="pay-title-name left">
+        <i><img src="@(string.IsNullOrEmpty(model.Logo) ? "/modules/images/ico-home.png" : model.Logo)" alt=""/></i>
+        <span>@(model.CompanyName)</span>
+    </div>
+</div>
+<!--页头end-->
+
+<!--内容-->
+<div class="pay-content pay-body row">
+
+	 <div class="pay-content-title">
+    	<div class="pay-content-title-info">
+            <h1>在线下单</h1>
+            <p class="color999 font16">@(model.CompanyName)</p>
+        </div>
+    </div>
+     <div class="pay-content-main row">
+    	<!----表单项---->
+        <div class="pay-content-main-form">
+        	<ul>
+                <li class="form-row row mTop10 hand">
+                	<div class="info-box" data-type="1">
+                        <div class="left">
+                            <span class="iconfont">&#xe62c;</span>
+                            <span>订单信息</span>
+                        </div>
+                        <div class="right lump order-lump" data-type="open">
+                        </div>
+                        <div class="clear"></div>
+                	</div>
+                </li>
+                
+                <li class="form-row row orderinfo-box">
+                     <div class="td mTop10 radio-info">
+                        <span class="ico-radiobox hover" data-type="1">
+                            <span></span>
+                        </span>
+                        &nbsp;打样
+                        <span class="ico-radiobox mLeft10" data-type="2">
+                            <span></span>
+                        </span>
+                        &nbsp;大货
+                    </div>
+                  <ul>
+                     <li class="form-row row">
+                        <div class="td">
+                        <div class="bigcategory">
+
+                        </div>
+                        <div class="ordercategory">
+
+                        </div>
+                        <div class="clear"></div>
+                        </div>
+                        </li>
+                
+                     <li class="form-row row">
+                        <div class="td">
+                    	    <input type="text" maxlength="5" id="planQuantity" placeholder="请输入数量"  data-empty="必填" data-type="int" class="inputbox verify"/>
+                        </div>
+                     </li>
+                
+                     <li class="form-row row">
+                        <div class="td">
+                    	    <input type="text" maxlength="10" id="planPrice" placeholder="请输入期望价格" data-empty="必填" data-type="double"  class="inputbox verify"/>
+                        </div>
+                     </li>
+                     <li class="form-row row">
+                        <div class="td">
+                            <input type="text" id="iptCreateTime" readonly="true" placeholder="期望交货日期"  class="ipt-date hand"  />
+                        </div>
+                     </li>
+                     <li class="form-row row">
+                        <div class="td">
+                            <textarea id="remark" placeholder="如有详细需求请注明具体内容，以免制作时产品遗漏"  onpropertychange="this.style.height=this.value.split('\n').length*24 + 'px';this.style.height=this.scrollHeight + 'px';" oninput="this.style.height=this.value.split('\n').length*24 + 'px';this.style.height=this.scrollHeight + 'px';"class="textarea"></textarea>
+                    	    @*<input type="text" id="remark" placeholder="如有详细需求请注明具体内容，以免制作时产品遗漏" class="textarea" />*@
+                        </div>
+                     </li>
+                    <li class="row">
+                        <div class="td">
+                           <div class="img-box">
+                                <ul  id="orderImages">
+                                    <li data-isone="1" id="productIco" class="left" >
+                                        <form id="productIco_postForm" enctype="multipart/form-data">
+                                            <input type="file" data-filequantity="0" class="productIco_fileUpLoad" accept="1" name="file" id="productIco_fileUpLoad" multiple="multiple" style="display:none;">
+                                            <input id="productIco_buttonSubmit" class="ico-upload" type="button" value="+">
+                                        </form>
+                                    </li>
+                                </ul>
+                           </div>
+                        </div>
+                    </li>                                 
+                  </ul>
+                </li>
+                 <li>
+                    <div class="th pdall info-box  hand" data-type="2">
+                        <div class="left">
+                        <span class="iconfont">&#xe624;</span>
+                        <span>客户信息</span>
+                        </div>
+                        <div class="right lump customer-lump" data-type="open">
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <ul class="customer-box">
+                            <li class="form-row row mTop10">
+                                <div class="td">
+                    	            <input type="text" placeholder="请输入姓名" maxlength="50" id="name" data-empty="必填" class="inputbox verify"/>
+                                </div>
+                            </li>
+                
+                            <li class="form-row row">
+                                <div class="td">
+                    	            <input type="text" placeholder="请输入手机" maxlength="11" id="contactMobile" data-empty="必填" data-type="mobile"  class="inputbox1 verify"/>
+                                </div>
+                            </li>
+                
+                            <li class="form-row1 row">
+                                <div class="td">
+                    	            <span id="city"></span>
+                                </div>
+                            </li>
+                
+                            <li class="form-row row">
+                                <div class="td">
+                    	            <input type="text" placeholder="详细地址" id="address"  class="inputbox2"/>
+                                </div>
+                            </li>
+                         </ul>
+                </li>
+
+
+                
+                <li class="row btn-box">
+                    <button type="button" id="btnSave" class="btn-con">确认下单</button>
+                </li>
+            </ul>
+            
+        </div>
+    </div>
+
+</div>
+<!--内容end-->
+
+@*<!--页脚-->
+<div class="pay-bottom pay-body row">
+	<p>©2016-2017 智能工厂 浙ICP16001314</p>
+</div>
+<!--页脚end-->*@
+</body>
+    <script type="text/javascript">
+        seajs.use(["scripts/home/create"], function (home) {
+            home.init('@(model.ClientID)', '@(model.AgentID)', "", '@Html.ToJSONString(categoryItems)');
+        });
+
+
+        var myDate = new Date();
+        var minDate = myDate.toLocaleDateString();
+        minDate = minDate + " 23:59:59"
+        //期望交货日期
+        var taskEndTime = {
+            elem: '#iptCreateTime',
+            format: 'YYYY-MM-DD',
+            min: minDate,
+            max: '2099-06-16',
+            istime: false,
+            istoday: false
+        };
+        laydate(taskEndTime);
+
+    </script>
+</html>
+

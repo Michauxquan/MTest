@@ -1,0 +1,72 @@
+﻿body {
+background-color:#ededed;
+}
+/*头部*/
+.header {padding:15px 20px 15px 60px;margin-right:10px;background:url(/modules/images/logo_login.png) no-repeat 20px 13px ;background-size:40px;
+         line-height:32px;background-color:rgba(255,255,255,0.7);position:fixed;width:100%;box-sizing:border-box;left:0;top:0;
+         z-index:100}
+.header span { font-size:16px;color:#666;display:block;}
+.header span:nth-child(2){margin-top:-2px;}
+.header span:nth-child(2) a{ background-color:#4a98e7;padding: 5px 10px;color:#fff; font-size:14px;border-radius:3px;border: #4a98e7 solid 1px;transition:background-color 0.2s;}
+.header span:nth-child(2) a:hover { background-color:#2f73b8;}
+
+.select-login {
+width:660px;
+margin:120px auto;
+background-color:#fff;
+border:1px solid #ccc;
+}
+
+.ali-login {
+    width:230px;
+margin:40px auto;
+padding:60px 50px 20px 50px;
+text-align:center;
+border-right:1px solid #ccc;
+}
+
+.ali-login .btn{
+margin-top:60px;
+padding:12px 55px;
+color:#fff;
+background-color:#ffad55;
+border-radius:3px;
+font-size:16px;
+cursor:pointer;
+}
+
+
+.bind-account {
+width:200px;
+margin:40px auto;
+padding:60px 50px 20px 50px;
+text-align:center;
+}
+
+.bind-account .btn{
+margin-top:60px;
+padding:12px 35px;
+color:#fff;
+background-color:#5d9cec;
+border-radius:3px;
+font-size:16px;
+cursor:pointer;
+}
+
+.select-login .des {
+margin-top:20px;
+color:#999;
+font-size:14px;
+}
+
+.btn-box .btn{
+margin-bottom:30px;
+padding:12px 35px;
+color:#fff;
+background-color:#5d9cec;
+border-radius:3px;
+font-size:16px;
+cursor:pointer;
+}
+
+.btn:hover { background-color:#2F73B8; }

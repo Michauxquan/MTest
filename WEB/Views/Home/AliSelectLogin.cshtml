@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "请选择绑定已有帐户，或直接进入使用";
+
+    Layout = null;
+}
+<title>请选择绑定已有帐户，或直接进入使用</title>
+<link href="/modules/css/base.css" rel="stylesheet" />
+<link href="/modules/css/default/layout.css" rel="stylesheet" />
+<link href="/modules/css/home/selectlogin.css" rel="stylesheet" />
+
+<div class="header">
+    <span class="left mLeft10">厂盟智能</span>
+    <span class="right"><a href="/Home/Login">登录</a></span>
+    <div class="clear"></div>
+</div>
+<div class="select-login">
+    <div class="left ali-login">
+        <div><img src="/modules/images/ico-ali-login.png" /></div>
+        <div class="des">使用阿里账户直接登录</div>
+        <div onclick="location.href='/Home/AliRegisterMember'" class="btn">直接登录</div>
+    </div>
+
+    <div class="left bind-account">
+        <div><img src="/modules/images/ico-account-login.png" /></div>
+        <div class="des">将阿里账户与已有账户进行绑定</div>
+        <div class="btn" onclick="location.href='/Home/Login?BindAccountType=1'" >绑定已有账户</div>
+    </div>
+    <div class="clear"></div>
+</div>
+

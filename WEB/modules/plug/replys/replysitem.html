@@ -1,0 +1,110 @@
+﻿{%
+	for(var i=0;i<$data.length; i++){
+	var item = $data[i];
+    var attchment=item.Attachments;
+%}
+<tr>
+    <td class="user-avatar">
+        <img data-id="{%=item.CreateUser.UserID%}" src="{%=item.CreateUser.Avatar||'/modules/images/defaultavatar.png'%}"/>
+    </td>
+    <td class="pTop20">
+        <div class="width-order-taskdetail" style="padding-bottom:10px;">
+            <div class="">
+                <div class="" >
+                    <span style="color:#2f73b8;" class="reply-username">{%=item.CreateUser.Name%}{%=item.FromReplyUser!=null?" 回复 "+item.FromReplyUser.Name:""%}:</span>
+                    <span style="color:#777; display:block;" class="reply-content wordbreak">{%=decodeURI(item.Content)%}</span>
+                    {%if(attchment){%}
+                    {%if(attchment.length>0){%}
+                    <div class="width750 attchment-box">
+                        <ul class="mTop10 upload-file">
+                            {%
+                            for(var j=0;j<attchment.length;j++){   
+                                var attchmentItem=attchment[j];
+                                var extension=attchmentItem.OriginalName.split('.');
+
+                                if(attchmentItem.Type==2)
+                                { 
+                                var extensionName=extension[extension.length-1];
+                                var attachmentUrl="/modules/images/"+(
+                                                                    extensionName=="pdf"?"ico-attachment-pdf.png":
+                                                                    extensionName=="ppt"?"ico-attachment-ppt.png":
+                                                                    extensionName=="psd"?"ico-attachment-psd.png":
+                                                                    extensionName=="txt"?"ico-attachment-txt.png":
+                                                                    extensionName=="xls"||extensionName=="xlsx"?"ico-attachment-excel.png":
+                                                                    extensionName=="rar"||extensionName=="zip"?"ico-attachment-rar.png":
+                                                                    extensionName=="doc"||extensionName=="docx"?"ico-attachment-word.png":""
+                                                                    );
+                                %}  
+                                <li class="mTop5">
+                                    <div class="left logo-upload" style="background:url('{%=attachmentUrl%}') no-repeat 16px 14px;background-color:#efefef;">
+                                    </div>
+                                    <div class="information-upload pLeft10 width100 borderEEE hight58">
+                                        <div title="{%=attchmentItem.OriginalName%}" class="long filename width100">{%=attchmentItem.OriginalName%}</div>
+                                        <div title='{%=attchmentItem.Size/1024/1024<1?(attchmentItem.Size/1024).toFixed(2)+"KB":(attchmentItem.Size/1024/1024).toFixed(2)+"MB"%}'>{%=attchmentItem.Size/1024/1024<1?(attchmentItem.Size/1024).toFixed(2)+"KB":(attchmentItem.Size/1024/1024).toFixed(2)+"MB"%}</div>
+                                    </div> 
+                                    <a href="{%=attchmentItem.ServerUrl+attchmentItem.FilePath+attchmentItem.FileName+'?attname='+attchmentItem.OriginalName%}" target="_blank">
+                                        <div class="popup-download download iconfont hide">
+                                            &#xe655;
+                                        </div>
+                                    </a>
+                                </li>      
+                            {%
+                                }
+                            }
+                            %}
+                        </ul>
+                        <div class="clear"></div>
+                        <ul id="Images-reply" class="accessory upload-img" style="display: block;">
+                            {%
+                            for(var k=0;k<attchment.length;k++){   
+                                var attchmentItem=attchment[k];
+                                if(attchmentItem.Type==1)
+                                { 
+                            %}  
+                            <li class="mTop5 hand"><img class="orderImage-repay" data-src="{%=attchmentItem.ServerUrl+attchmentItem.FilePath+attchmentItem.FileName%}" src="{%=attchmentItem.ServerUrl+attchmentItem.FilePath+attchmentItem.FileName+'?imageView2/1/w/120/h/80'%}"></li>
+                            {%
+                                }
+                            }
+                            %}
+                        </ul> 
+                        <div class="clear"></div>              
+                </div>
+                {%}}%}                
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="mTop5">
+                <div class="left" style="color:#999;">{%=item.CreateTime.toDate("yyyy-MM-dd hh:mm:ss") %}</div>
+                <div class="right hand btn-reply" data-replyid="{%=item.ReplyID%}">
+                    <div class="left" style="padding-top:3px;"><img src="/modules/images/ico-reply-gray.png"/></div>
+                    <div class="left mLeft5" style="color:#777;font-size:14px;">回复</div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+                <div class="mTop10 hide reply-box" id="reply-box{%=item.ReplyID%}" data-replyid="{%=item.ReplyID%}">
+                    <div>
+                        <textarea placeholder="发表评论" maxlength="1000" class="msg-{%=item.ReplyID%}" id="Msg_{%=item.ReplyID%}" style="width:100%;"></textarea>
+                    </div>
+                    <div id="reply-attachment{%=item.ReplyID%}" style="width:25px;" class="iconfont left hand">&#xe65a;</div>
+                    <div class="btn-emotion left iconfont mLeft10 hand" data-id="Msg_{%=item.ReplyID%}" title="表情">&#xe65b;</div>
+                
+                    <div class="right mTop5 btn save-reply" data-id="{%=item.GUID%}"  data-stageid="{%=item.StageID%}" data-replyid="{%=item.ReplyID%}" data-createuserid="{%=item.CreateUserID%}" data-agentid="{%=item.AgentID%}">
+                        回复
+                    </div>
+                    <ul class="mTop40 upload-file hide task-file upload-files-{%=item.ReplyID%}" id="reply-files{%=item.ReplyID%}">
+                              
+                    </ul> 
+                    <div class="clear"></div>
+                    <ul id="reply-imgs{%=item.ReplyID%}" class="accessory order-imgs addimg hide task-file upload-files-{%=item.ReplyID%}">
+
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+            </div>  
+            
+        </div>
+    </td>
+</tr>
+
+
+{% } %}

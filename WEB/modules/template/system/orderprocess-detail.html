@@ -1,0 +1,41 @@
+﻿<ul class="easydialog-create">
+    <li><span class="left width80">流程名称：</span>
+        <input type="text" id="processName" maxlength="20" class="input verify " data-empty="必填" />
+    </li>
+<!--    <li>
+        <span class="left width80">周期（天）：</span>
+        <input type="text" id="planDays" maxlength="3" class="input verify width80" data-type="int" data-text="请输入整数" value="7" data-empty="必填" />
+
+    </li>-->
+    <li id="processType">
+        <span class="left width80">类型：</span>
+        <div class="left radiobox hand mRight10">
+            <span class="iconfont ico-radiobox hover" data-value="1"><span></span></span>
+            打样
+        </div>
+        <div class="left radiobox hand">
+            <span class="iconfont ico-radiobox" data-value="2"><span></span></span>
+            大货
+        </div>
+        <div class="clear"></div>
+    </li>
+    <li id="categoryType">
+       <span class="left width80">品类：</span>
+       <div class="left radiobox" id="processCategory">
+           <ul class="role-items">
+               {%
+                   for(var i=0;i<$data.length;i++)
+                   {
+                        var item=$data[i];
+               %}
+               {%if(i==0){%}
+                <li class="role-item" style="margin-left:0;" data-id="{%=item.CategoryID%}">{%=item.Name%}</li>
+               {%}else{%}
+               <li class="role-item" data-id="{%=item.CategoryID%}">{%=item.Name%}</li>
+               {%}}%}
+           </ul>
+       </div>
+       <div class="clear"></div>
+    </li>
+</ul>
+<div class="clear"></div>

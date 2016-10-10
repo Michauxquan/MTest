@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "公司信息";
+}
+
+@section css{
+    <link href="/modules/css/system.css" rel="stylesheet" />
+    <link href="/modules/plug/daterangepicker/daterangepicker.css" rel="stylesheet" />
+}
+
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/system/client"], function (obj) {
+            obj.init(@ViewBag.Option);
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">企业信息</span>
+</div>
+<div class="content-title">
+    <div id="spCustomerName" class="left titlename"></div>
+    <div id="updateCustomer" class="left ico-edit iconfont mLeft20"></div>
+    
+</div>
+<div class="content-body pBottom50">
+    <ul class="content-info">
+        <li><span class="column-title">工厂号：</span><label id="ckey"></label></li>
+        <li><span class="column-title">联系人：</span><label id="ContactName"></label> </li>
+        <li><span class="column-title">地址：</span><label id="address"></label></li>
+        <li><span class="column-title">联系电话：</span><label id="MobilePhone"></label></li>
+        <li><span class="column-title">详细地址：</span> <label id="lblReamrk"></label></li>
+        <li><span class="column-title">办公电话：</span><label id="OfficePhone"></label></li>
+@*        <li style="width:100%;">
+            <span class="column-title left">下单地址：</span>
+            <a id="cid" href="/IntFactoryOrder/Orders/id=" data-url="@(ViewBag.YXUrl)" target="_blank"></a>            
+        </li>*@
+        <img class="absolute-img hide" id="PosterDisImg" alt="" />
+    </ul>
+    <div class="clear"></div>
+</div>
+<div class="module-header mTop20">
+    <ul class="module-tab left">
+        <li class="hover" data-id="1">授权信息</li>
+        <li class="@(ExpandClass.IsLimits(HttpContext.Current,"101019009"))" data-id="2">订单列表</li>
+    </ul>    
+</div>
+<div class="content-body pBottom50">
+    <div class="content-SQXI">
+        <ul class="table-add">
+            <li>
+                <span class="width100">当前人数上限：</span><span id="UserQuantity"></span>
+            </li>
+            <li>
+                <span class="width100">上限日期：</span><span id="EndTime"></span>
+            </li>
+            <li>
+                <span class="width100">剩余使用还有：</span><span id="agentRemainderDays"></span><span>天</span>
+            </li>
+        </ul>
+
+        <div class="mTop20">
+            <a class="btn mLeft20 btn-buy" target="_blank"  href="/Auction/BuyNow" >立即购买</a>
+        </div>
+    </div>
+    <div class="hide pTop10 content-order">
+        <div id="OrderTypes" class="left mLeft20"></div>
+        <div id="OrderStatus" class="left mLeft20"></div>
+
+        <div class="left mLeft20">
+            <input type="text" id="iptCreateTime" placeholder="订单日期"  class="ipt-date"  />
+        </div>
+        <div class="clear"></div>
+
+        <table class="table-list mTop10">
+            <tr class="tr-header">
+                <td class="tLeft minwidth70">订单时间</td>
+                <td class="width200">购买人数</td>
+                <td class="width150">购买年数</td>
+                <td class="width150">金额</td>
+                <td class="width200">订单类型</td>     
+                <td class="width200">订单状态</td>     
+                <td class="width150">创建人</td>
+                <td class="width150">操作</td>
+            </tr>
+        </table>
+
+        <div id="pager" class="mTop20"></div>
+    </div>
+</div>
+
+<ul class="dropdown-ul hide" style="width:95px;">
+    <li id="PayClientOrder">继续付款</li>
+    <li id="CloseClientOrder">关闭</li>
+</ul>

@@ -1,0 +1,95 @@
+﻿
+/*订单浮层*/
+.order-layer { width:500px; background-color:#fff; position:fixed; top:50px; bottom:0px; right:-505px;  border-left:solid 1px #eee; box-shadow:0 0 5px #ccc;}
+
+.order-layer .layer-header{ height:40px; line-height:40px; background-color:#f5f5f5; font-size:14px; text-indent:15px; color:#666; }
+.order-layer .layer-header .iconfont{ font-size:24px; cursor:pointer;  color:#999;}
+.order-layer .layer-header .iconfont:hover{ color:#2F73B8;}
+
+.order-layer-item { width:460px; padding:0 20px 50px; position:absolute; top:40px; bottom:0; overflow:auto; }
+.order-layer-item h1 { border-bottom:solid 1px #eee; height:35px; line-height:35px; font-size:14px; color:#666; }
+
+.order-layer-item ul { margin-bottom:30px; }
+.order-layer-item ul li{ height:30px; line-height:30px; margin-top:5px; }
+.order-layer-item ul .column-title{ width:80px; display:inline-block; float:left; color:#999; }
+
+.order-layer-item .stage-items { }
+.order-layer-item .stage-items  li{ float:left; width:170px; cursor:pointer; padding:5px 10px; height:50px;
+                   margin-right:20px; margin-bottom:10px; border:solid 1px #ccc; border-left-width:8px; }
+
+.order-layer-item .stage-items  li:hover{ background-color:#eee;}
+
+.order-layer-item .stage-items  li.ing{ border-color: #45BF67;}
+.order-layer-item .stage-items  li.over{ border-color: #3A7DE5;}
+
+.order-layer-item .stage-items  li span{ display:block; font-size:12px; height:25px; line-height:25px; width:120px; color:#333;}
+.order-layer-item .stage-items  li .status { color:#999; }
+.order-layer-item .stage-items  li.ing .status { color: #45BF67;}
+.order-layer-item .stage-items  li.over .status { color: #3A7DE5;}
+
+.order-layer .data-loading { margin-top:200px; }
+
+/*切换图片*/
+.enlarge-image-bgbox {
+    width:100%;
+    height:100%; 
+    position:fixed;
+    top:0; 
+    left:0; 
+    background-color:#666;
+    z-index:9999; 
+    opacity:0.9; 
+
+}
+.enlarge-image-bgbox .iconfont{ 
+    float:right; 
+    color:#fff; 
+    font-size:20px; 
+    margin:10px 10px 0 0; 
+    cursor:pointer; 
+}
+.enlarge-image-bgbox .iconfont:hover{ 
+    color:#4a98e7;  
+}
+.enlarge-image-box{ 
+    position:fixed; 
+    top:40px; 
+    bottom:40px; 
+    left:100px; 
+    right:100px; 
+    z-index:19999; 
+
+}
+.left-enlarge-image,.right-enlarge-image {
+    position:fixed;
+    width:40px;
+    height:100px; 
+    cursor:pointer;
+    cursor:pointer;
+
+}
+.left-enlarge-image {
+     left:100px;  
+     background:url('/modules/images/ico-prev-image.png') no-repeat;
+     background-size:cover;
+}
+.left-enlarge-image:hover {  
+    background:url('/modules/images/ico-prev-image-hover.png') no-repeat;
+    background-size:cover;
+}
+.right-enlarge-image { 
+    right:100px; 
+    background:url('/modules/images/ico-next-image.png') no-repeat;
+    background-size:cover; 
+}
+.right-enlarge-image:hover {  
+    background:url('/modules/images/ico-next-image-hover.png') no-repeat;
+    background-size:cover; 
+}
+.enlarge-image-item{
+    position:fixed;
+    top:40px;
+    bottom:40px;
+    left:200px;
+    right:200px; 
+}

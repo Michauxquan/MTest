@@ -1,0 +1,45 @@
+﻿{%
+	for(var i=0, j=$data.length; i < j; i++){
+    var isNew=false;
+	var item = $data[i];
+%}
+<ul class="easydialog-create" id="plateBox">
+    <li>
+        <span class="width80">名称：</span>
+        <span>
+            <input type="text" value="{%=item.Title%}" id="plateTitle" maxlength="100" />
+        </span>
+    </li>
+    <li>
+        <span class="width80">类型：</span>
+        <select id="selectType">        
+            {%
+                for(var k=0;k<item.plateType.length;k++)
+                {
+                    var type=item.plateType[k];
+                    if(!isNew&&!!item.PlateID){
+                        if(item.TypeName.trim()!=type.Name){
+                            isNew=true;
+                        }
+                    }
+            %}   
+                    <option value="{%=type.Name%}">{%=type.Name%}</option>
+            {%}
+            if(isNew){
+            %}
+                <option value="{%=item.TypeName.trim()%}">{%=item.TypeName.trim()%}</option>
+            {%}%}
+        </select>
+    </li>
+    <li>
+        <span class="width80">图标：</span>
+        <span id="selectPlateIcon" class="btn">选择图标</span>
+        <div class="plate-show-ico hide"><img /></div>
+            <input type="hidden" id="plateIcon" value="{%=item.Icon%}"/>
+    </li>
+    <li>
+        <span class="width80">描述：</span>
+        <textarea id="plateRemark" maxlength="200">{%=item.Remark%}</textarea>
+    </li>
+</ul>
+{% } %}

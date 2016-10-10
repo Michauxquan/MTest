@@ -1,0 +1,151 @@
+﻿@{
+    IntFactoryEntity.Users CurrentUser = (IntFactoryEntity.Users)Session["ClientManager"];
+    var model = (IntFactoryEntity.Products)ViewBag.Model;
+    var depots = (List<IntFactoryEntity.DepotSeat>)ViewBag.Depots;
+    var type = ViewBag.OrderType;
+    ViewBag.Title = model.ProductName;
+}
+@section css{
+   <link rel="stylesheet" href="/modules/css/shoppingcart/filterdetails.css" />
+   <link href="/modules/plug/umeditor/themes/default/css/umeditor.min.css" rel="stylesheet" />
+}
+
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/shoppingcart/filterdetails"], function (obj) {
+            obj.init('@Html.ToJSONString(model)', '@ViewBag.DetailID', '@type', '@ViewBag.GUID', '@ViewBag.TID', '@(Html.ToJSONString(depots))', '@ViewBag.AID');
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">材料详情</span>
+    @if (CurrentUser.ClientID == model.ClientID)
+    {
+         <a href="/Products/ProductDetail/@(model.ProductID)" class="btn right">编辑材料</a>
+        if(type==0)
+        {
+            <div class="dropdown right mRight10 btn-dropdown">
+                操作
+            </div>
+        }
+    }
+    <div class="clear"></div>
+</div>
+<div class="content-body mTop20" style="padding:15px;">
+    <div class="top-div">
+        <div class="image left">
+            <img id="productimg" src="@(model.ProductImage)" />
+        </div>
+        <div class="product-name left">
+            <h1 class="left">@(model.ProductName)</h1>
+            <div class="clear"></div>
+            <ul class="price">
+                <li class="column">价&nbsp;&nbsp;格：</li>
+                <li id="price" class="salesprice">￥@(model.Price.ToString("f2"))</li>
+                @*<li class="commonprice">￥@(model.CommonPrice.Value.ToString("f2"))</li>*@
+            </ul>
+            <div class="attrs" id="saleattr">
+                <ul class="attr-item salesattr">
+                    <li class="attrkey">
+                        @(model.SaleAttrs.Count == 1 ? model.SaleAttrs[0].AttrName + "：" : "规格：")                      
+                        </li> 
+                    <li class="attrValues">
+                        <ul class="sales-item">
+                            @foreach (var detail in model.ProductDetails)
+                            {
+                                if (model.ProductDetails.Count > 1 && detail.IsDefault == 1 && (detail.LogicOut == 0 && detail.StockOut == 0 && detail.StockIn == 0))
+                                {
+                                    continue;
+                                }
+                                <li class="value" data-id="@detail.ProductDetailID">
+                                @{
+                                if (model.SaleAttrs.Count == 1)
+                                {
+                                   @(string.IsNullOrEmpty(detail.Description) ? "默认规格" : detail.Description.Replace('【', ' ').Replace('】', ' ').Replace(model.SaleAttrs[0].AttrName + ":", string.Empty).Replace(model.SaleAttrs[0].AttrName + "：", string.Empty))
+                                }
+                                else
+                                {
+                                    @(string.IsNullOrEmpty(detail.Description) ? "默认规格" : detail.Description.Replace('【', ' ').Replace('】', ' '))
+                                }
+                                }
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="attr-item">
+                    <li class="attrkey">单位：</li>
+                    <li class="attrValues">
+                       <label  class="mLeft20" id="small" data-id="@(model.SmallUnit.UnitID)">@(model.SmallUnit.UnitName)</label>
+                    </li>
+                </ul>
+                 <ul class="attr-item">
+                    <li class="attrkey">库存：</li>
+                    <li class="attrValues">
+                        <label class="mLeft20" id="productStockQuantity">0</label>
+                    </li>
+                </ul>
+           </div>
+           <div class="choose-div hide">
+                <div class="mTop10">
+                    <div class="depot-dropdown left"></div>      
+                    
+                    <input maxlength="20" type="text" class="width60 mLeft10 mTop1 left" value="1" id="quantity" />     
+                    
+                    <label class="mLeft10 left mTop5">货位库存：</label><label class="mTop5 left" id="productDepotQuantity">0.00</label>     
+                </div>
+               <div class="clear"></div>
+                <div class="mTop10">
+                    <div class="addcart" id="addcart">加入清单</div>
+                    <div class="addcart hide left" id="addDoc"></div>
+                    <div id="addDocAndBack" class="mLeft10 add-return hide left">立即提交单据</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="show-nav">
+        <ul class="show-nav-ul">
+            <li class="hover" data-id="infoDetail">材料介绍</li>
+            <li class="" data-id="useLogs">使用记录</li>
+        </ul>
+    </div>
+    
+    <ul class="product-attr nav-partdiv" id="infoDetail">
+        <li class="long">材料名称：@(model.ProductName)</li>
+        <li class="long">材料编码：@(model.ProductCode)</li>
+        <li class="long">供应商：@(model.Providers.Name)</li>
+        <li class="long">联系人：@(model.Providers.Contact)</li>
+        <li class="long">联系电话：@(model.Providers.MobileTele)</li>
+        <li class="long">地址：@(model.Providers.Address)</li>
+        @foreach (var attr in model.AttrLists)
+        { 
+            <li class="long">@attr.AttrName：@attr.AttrValues[0].ValueName</li>
+        }
+        
+    </ul>
+    <div id="useLogs" class="nav-partdiv product-uselog hide">
+        <table class="use-table-list mTop10">
+            <tr class="tr-header">
+                <td class="tLeft width150">客户</td>
+                <td class="">订单编号</td>
+                <td class="">规格</td>
+                <td class="width100">数量</td>
+                <td class="width150">采购日期</td>
+            </tr>
+        </table>
+        <div id="pagerUseLogs" class="mTop10"></div>
+    </div>
+    <div class="edui-container">
+        <div class="edui-editor-body">
+            <div class="description  edui-body-container" id="description">
+
+             </div>
+        </div>
+    </div>
+    
+</div>
+<ul class="dropdown-ul hide" style="width:90px;">
+    <li id="purchases" data-type="1">加入采购</li>
+    <li id="damaged" data-type="3">消耗登记</li>
+    <li id="overflow" data-type="4">材料报溢</li>
+</ul>

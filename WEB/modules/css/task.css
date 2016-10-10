@@ -1,0 +1,294 @@
+﻿
+/*                  任务详情页样式                               */
+.taskContent { 
+    background-color: #fff; 
+    margin: 0 20px; 
+    padding: 10px;
+    clear:both;
+    overflow:auto; 
+}
+.taskContent .taskBaseInfo li {
+    line-height:55px;
+}
+.taskDetail {
+    padding-right:10px;
+}
+.taskDetail .column-title {
+    width:70px;
+    display:inline-block;
+    color:#666;
+}
+
+.task-time {
+    padding:5px 6px;
+    border-radius:5px;
+    background-color:#4a98e7;
+    color:#fff;
+}
+.order-remark {
+    margin-top:20px;
+    word-break: break-all;
+    line-height:40px;
+    padding:0px 5px;
+    border:1px solid #eee;
+}
+.order-remark .title {
+    color:#666;
+}
+.content-title ul li { float: left; height: 50px; border-left: solid 1px #eee; font-size: 14px; color: #666; padding: 0 20px; }
+.content-title ul li span{ font-size:14px; color:#666; }
+.content-title ul .iconfont { font-size: 20px; }
+.content-title .content-item {
+    font-size:14px;
+    color:#666;
+}
+/*任务样图信息*/
+.order-imgs-div {
+    cursor:pointer;
+}
+.order-imgs-div .order-imgs {
+    width:350px;
+    height:350px; 
+    background-color:#f9f9f9;
+    text-align:center;
+    vertical-align:middle;
+    display:table-cell;
+}
+.order-imgs-div .order-imgs img{
+    max-width:350px;
+    max-height:350px;
+    background:url('/modules/images/none-img.png') no-repeat center;
+    background-color:#f0f0f0;
+}
+.order-imgs-list {
+    max-width:350px;
+    word-wrap:break-word; 
+    word-break:break-all;
+
+}
+.order-imgs-list li{
+    width:40px;
+    height:40px;
+    border:solid 2px #eee; 
+    margin-right:5px; 
+    cursor:pointer;
+    float:left;
+}
+.order-imgs-list li.hover{ 
+    border-color:red;
+}
+.order-imgs-list li img{
+    max-width:40px;
+    max-height:40px;
+    top:50%;
+    position:relative;
+     left:50%; 
+     transform: translate(-50%,-50%);
+}
+
+/*切换图片*/
+.enlarge-image-bgbox {
+    width:100%;
+    height:100%; 
+    position:fixed;
+    top:0; 
+    left:0; 
+    background-color:#666;
+    z-index:9999; 
+    opacity:0.9; 
+
+}
+.enlarge-image-bgbox .iconfont{ 
+    float:right; 
+    color:#fff; 
+    font-size:20px; 
+    margin:10px 10px 0 0; 
+    cursor:pointer; 
+}
+.enlarge-image-bgbox .iconfont:hover{ 
+    color:#4a98e7;  
+}
+.enlarge-image-box{ 
+    position:fixed; 
+    top:40px; 
+    bottom:40px; 
+    left:100px; 
+    right:100px; 
+    z-index:19999; 
+
+}
+.left-enlarge-image,.right-enlarge-image {
+    position:fixed;
+    width:40px;
+    height:100px; 
+    cursor:pointer;
+    cursor:pointer;
+
+}
+.left-enlarge-image {
+     left:100px;  
+     background:url('/modules/images/ico-prev-image.png') no-repeat;
+     background-size:cover;
+}
+.left-enlarge-image:hover {  
+    background:url('/modules/images/ico-prev-image-hover.png') no-repeat;
+    background-size:cover;
+}
+.right-enlarge-image { 
+    right:100px; 
+    background:url('/modules/images/ico-next-image.png') no-repeat;
+    background-size:cover; 
+}
+.right-enlarge-image:hover {  
+    background:url('/modules/images/ico-next-image-hover.png') no-repeat;
+    background-size:cover; 
+}
+.enlarge-image-item{
+    position:fixed;
+    top:40px;
+    bottom:40px;
+    left:200px;
+    right:200px; 
+}
+
+/*制版属性*/
+.platemakingContent { margin: 10px 0px; }
+.platemakingContent .iconfont { color: #666; font-size: 24px; }
+
+.platemakingContent .print-plate { line-height: 24px; vertical-align: text-bottom; color: #4a98e7; display: inline-block; margin-left: 2px; }
+
+.platemakingBody { border-top: 1px solid #eee; border-left: 1px solid #eee; }
+.platemakingBody .tr-header{ background-color:#f6f6f6; }
+.platemakingBody .tr-header span:first-child{ float:left; display:inline-block; }
+.platemakingBody .tr-header .ico-dropdown{ margin-top:2px; }
+.platemakingBody td { border-bottom: 1px solid #eee; border-right: 1px solid #eee; }
+
+.platemakingContent .td-normal-plate { background-color: #4a98e7; }
+.platemakingContent .td-normal-plate span:first-child{ color:#fff;}
+.platemakingContent .td-normal-plate .ico-dropdown{ display:none;}
+
+.platemakingContent .tbContent {
+    cursor:pointer;
+}
+.platemakingContent .tbContentIpt {
+    width:80px;
+}
+.platemakingContent .btn-create{
+    height:24px; 
+    min-width:24px;
+    cursor:pointer;
+    background:url(/modules/images/btn-add.png) no-repeat; 
+}
+.platemakingContent .btn-remove{
+     background:url(/modules/images/btn-remove.png) no-repeat; 
+     height:24px; 
+     min-width:24px;
+     cursor:pointer;
+}
+.platemakingContent .platemakingOperate {
+    margin:0px auto;
+    width:60px;
+}
+
+.platemakingContent .content-main {
+    width:800px;
+}
+
+.platemakingContent .txt-content {
+    width:800px;
+}
+
+.create-first { 
+    height:70px; 
+    line-height:60px; 
+    margin:50px auto; 
+    width:200px; 
+    border:solid 1px #eee; 
+    box-shadow:0 0 10px #ccc; 
+    text-align:center;
+    color:#4a98e7; 
+    font-size:18px; 
+    cursor:pointer;
+
+}
+.create-first .plus{
+    color:#4a98e7; 
+    font-size:30px; 
+    font-weight:bold; 
+    top:3px; 
+    position:relative; 
+}
+
+/*品类属性选择层*/
+.role-items { 
+    width:455px; 
+    overflow:auto; 
+}
+.role-items li{
+    width:100px; 
+    height:35px;
+    float:left;
+    line-height:35px;
+    border:solid 1px #ccc; 
+    margin:10px 5px; 
+    text-align:center; 
+    cursor:pointer; 
+}
+.role-items li:hover{ 
+    border-color:#2F73B8; 
+    color:#2F73B8;
+}
+.role-items li.hover{ 
+    border-color:#2F73B8; 
+    color:#fff; 
+    background-color:#2F73B8;
+}
+
+/*订单阶段任务*/
+.process-stages { background-color:#fff; margin:20px; padding:10px; overflow:auto;  }
+
+.process-info { border-bottom:solid 1px #eee; overflow:auto; padding:10px 0; }
+
+.process-info .info{ font-size:16px; height:25px; line-height:25px;}
+
+.process-stages .stage-items { }
+.process-stages .stage-items  li{ float:left; width:130px;padding:5px 10px; position:relative;
+                   margin-right:10px; margin-bottom:10px; border:solid 1px #ccc; border-radius:2px; }
+
+.process-stages .stage-items  li.ing{ border-color: #45BF67;}
+.process-stages .stage-items  li.over{ border-color: #3A7DE5;}
+
+.process-stages .stage-items  li span{ display:block; font-size:12px; height:25px; line-height:25px; width:130px; color:#333;}
+.process-stages .stage-items  li.ing .status { color: #45BF67;}
+.process-stages .stage-items  li.over .status { color: #3A7DE5;}
+
+.process-stages .stage-items .unlock { background:url('/modules/images/ico-unlock.png') no-repeat; width:18px; height:18px; position:absolute; right:2px; top:2px; }
+
+/*成员列表样式*/
+.memberlist .member-title {line-height:30px;height:30px;margin-bottom:5px;padding-bottom:5px;}
+
+/*设置表格宽度*/
+.member-items tr td:first-child{width:166px;}
+.member-items tr td:nth-child(2),.member-items tr td:nth-child(3) { width:82px;}
+.member-items tr td:last-child { width:50px;}
+.member-items .member-nodata-txt td { width:380px !important;}
+
+.memberlist .member-items {width:100%;border:1px solid #ededed;border-collapse:collapse;}
+.memberlist .member-items tbody { display:block;max-height:238px;overflow-y:auto;width:380px;}
+.memberlist .member-items tr { text-align:center;line-height:34px;}
+.memberlist thead tr { display:block;width:380px;}
+.member-items tr:first-child td:first-child .iconfont { line-height:1;}
+.memberlist .member-items tr:last-child td { padding-bottom:5px;}
+.memberlist .member-items tbody tr td:last-child { font-size:20px;padding-top:4px;}
+.memberlist .member-items thead td { text-align:inherit;font-size:12px;height:40px;background-color:#efefef;color:#999;}
+.member-items td i { font-style:normal;vertical-align:middle;}
+.member-items i img { width:22px;height:22px;border-radius:50%;vertical-align:middle;}
+.memberlist .membername { width:100px;display:inline-block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.task-member .removeTaskMember { font-size: 16px; font-weight: bold; }
+.removeTaskMember { color:#999;}
+.removeTaskMember:hover {color:#4a98e7; }
+.task-members .iconfont { font-size: 24px; color: #888; margin-right: 5px; }
+
+.plate-show-ico { margin: 10px 0 0 82px; }
+.plate-show-ico img { max-width: 60px; max-height: 60px; width: 60px; }
+

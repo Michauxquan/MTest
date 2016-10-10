@@ -1,0 +1,70 @@
+﻿@{
+    var model = (IntFactoryEntity.StorageDoc)ViewBag.Model;
+    ViewBag.Title = "审核报溢单";
+}
+
+@section scripts{
+    <script type="text/javascript">
+        seajs.use(["scripts/stock/overflow"], function (obj) {
+            obj.initDetail('@(model.DocID)','@(model.WareID)');
+        });
+    </script>
+}
+<div class="header-box">
+    <span class="header-title left">报溢单号：@(model.DocCode)</span>
+    <a class="btn-back right mLeft10" href="/Stock/Overflow">返回</a>
+    <div class="btnccc right @(ExpandClass.IsLimits(HttpContext.Current,"103030404"))" id="btnDelete">删除</div>
+    <div class="btn right mRight10 @(ExpandClass.IsLimits(HttpContext.Current,"103030402"))" id="btnAudit">审核</div>
+</div>
+<div class="content-body mTop20">
+    <ul class="content-info">
+        <li>
+            <span class="column-title">总金额：</span>
+            <span class="column-value">@(model.TotalMoney.ToString("f2"))</span>
+        </li>
+        <li>
+            <span class="column-title">仓库：</span>
+            <span class="column-value">@(model.WareHouse!=null?model.WareHouse.Name:"")</span>
+        </li>
+        <li>
+            <span class="column-title">创建人：</span>
+            <span class="column-value">@(model.CreateUser.Name)</span>
+        </li>
+        <li>
+            <span class="column-title">创建日期：</span>
+            <span class="column-value">@(model.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"))</span>
+        </li>
+        <li>
+            <span class="column-title">备注：</span>
+            <span class="column-value">@(model.Remark)</span>
+        </li>
+    </ul>
+     <div class="tab-nav mTop30">
+        <ul class="tab-nav-ul left">
+            <li class="hover" data-id="navRemark">材料明细</li>
+        </ul>
+    </div>
+    <table class="table-list mTop20 pBottom50">
+        <tr class="tr-header">
+            <td class="tLeft">材料名称</td>
+            <td class="tLeft">编码</td>
+            <td class="tLeft">规格</td>
+            <td class="center width80">单位</td>
+            @*<td class="tLeft">批次</td>*@
+            <td class="">货位</td>
+            <td class="center">数量</td>
+        </tr>
+        @foreach (var item in model.Details)
+        { 
+            <tr class="item detail-item" data-id="@(item.AutoID)">
+                <td><a href="/Products/ChooseDetail?pid=@(item.ProductID)&did=@(item.ProductDetailID)" target="_blank"> @(item.ProductName)</a></td>
+                <td><a href="/Products/ChooseDetail?pid=@(item.ProductID)&did=@(item.ProductDetailID)" target="_blank"> @(item.ProductCode)</a></td>
+                <td>@(item.Remark)</td>
+                <td class="center">@(item.UnitName)</td>
+               @* <td>@(item.BatchCode)</td>*@
+                <td class="depot-li center" data-id="@(item.DepotID)" data-status="@(item.Status)"></td>
+                <td class="center">@(item.Quantity)</td>
+            </tr>
+        }
+    </table>
+</div>

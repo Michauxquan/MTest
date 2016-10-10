@@ -1,0 +1,26 @@
+﻿
+<ul class="easydialog-create">
+    <li>
+        <span class="width80">阶段名称：</span>
+        <span>
+            <input type="text" class="verify" data-empty="必填" maxlength="25" id="iptStageName" />
+        </span>
+    </li>
+    <li>
+        <span class="width80">完成天数：</span>
+        <span>
+            <input type="text" class="verify width60" data-empty="必填" data-type="int" maxlength="2" value="0" id="iptNeedDays" />&nbsp;天&nbsp;（0为不限制）
+        </span>
+    </li>
+    <li>
+        <span class="width80 left mTop15">操作模块：</span>
+        {%
+            for(var i=0, j=$data.length; i < j; i++){
+	        var item = $data[i];
+        %}
+            <span class="stage-item" title="{%=item.Remark%}" data-id="{%=item.Mark%}"><span class="iconfont">&#xe64a;</span>&nbsp;&nbsp;{%=item.Name%}</span>
+            
+        {% } %}
+    </li>
+</ul>
+<div class="clear"></div>

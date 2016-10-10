@@ -1,0 +1,105 @@
+﻿
+.task-layer-box {z-index:1002; position: fixed; top: 50px; right:0px; bottom:0;  background-color: #fff; border-left: solid 1px #eee; opacity: 1;}
+
+
+.taskOperate { position:fixed; width:470px; height:30px; padding:10px 15px; border-bottom: 1px solid #eee;box-shadow:0 0 1px #ccc inset; }
+
+
+.taskContent { position:absolute; width:470px; padding:0 15px 50px 15px; top:50px; bottom:0px; overflow-x:hidden; overflow-y:auto;}
+
+
+.taskContent .taskDetail { padding-top: 15px; }
+
+.taskContent .taskDetail li { padding-bottom: 25px; }
+
+.taskDetail .column-title { width: 70px; display: inline-block; }
+
+.taskFinishStatus{  padding:5px 10px; background-color:#ccc; color:#333; border:none; display:inline-block; border-radius:2px; line-height:18px; }
+
+/*讨论备忘*/
+.taskContent .talk-body { padding-bottom:50px; }
+.taskContent .talk-body .task-replys { width:450px !important;}
+.taskContent .talk-body .txt-content { height:80px; width:450px; background-color:#f7f7f7; border:solid 1px #eee; }
+.taskContent .talk-body .txt-content:focus { border:solid 1px #318ae4;}
+.taskContent .talk-body .btn-save { position:absolute; right:0; bottom:0px; }
+
+.taskContent .talk-body .talk-title { border-bottom: solid 1px #4a98e7; height:40px; line-height:40px; width: 450px; color:#666; }
+.taskContent .talk-body .content-list { width: 450px;}
+.taskContent .talk-body .content-list td{ border-bottom:dashed 1px #ccc;  }
+.taskContent .talk-body .content-list .user-avatar { width:35px; padding-top:20px; vertical-align:top; }
+.taskContent .talk-body .content-list .user-avatar img{ width:24px; height:24px; border-radius:12px;  vertical-align:top; }
+.taskContent .talk-body .width-order-taskdetail { width:400px;}
+.taskContent .talk-body .reply-content { display:inline-block;white-space: pre-wrap;word-wrap: break-word; width:400px; }
+.attchment-box {width:400px !important;}
+
+.taskReplyBox { border: 1px solid #ddd; padding: 10px 10px 0px 10px; border-radius: 3px;  overflow:visible;}
+
+.taskReplyBox .iconfont { font-size:22px;height:28px;line-height:30px;color:#999;cursor:pointer;
+                          background-color:#fff;border:0;margin-top:5px;}
+.taskReplyBox .iconfont:hover { color:#4a98e7;}
+
+.taskReplyBox .taskReplyContent { border: none; width: 100%; height: 60px; border-bottom: 1px solid #ddd; }
+
+.taskReplyBox:hover { border: 1px solid #666; }
+
+.reply-box { border: 1px solid #ddd; padding: 10px 10px 10px 10px; border-radius: 3px;}
+
+.reply-box textarea { width: 100%; border: none; height: 40px; border-bottom: 1px solid #ddd; }
+
+
+.accessory {
+    margin-top:10px;
+}
+.accessory li{ 
+   position:relative;
+   float:left;
+   margin-right:15px;
+   border:1px solid #ddd;
+   width:120px;
+   height:80px;
+   text-align:center;
+   font-size:0;
+   line-height:80px;
+   margin-bottom:20px;
+   padding:1px;
+}
+.accessory li img{ 
+    max-width:120px;
+    max-height:80px;
+    vertical-align:middle;
+}
+.accessory li .ico-delete{ 
+    background: url(/modules/images/ico-delete.png) no-repeat;
+    height: 20px;
+    min-width: 20px;
+    line-height: 20px;
+    display: inline-block;
+    cursor: pointer;
+    position:absolute;
+    right:-10px;    
+    top:-10px;
+}
+
+/*上传*/
+/*.upload-file {margin-right:10px;}*/
+.upload-file li { float:left;position:relative;margin-right:20px;margin-bottom:10px;}
+.upload-file li img{ width:35px;height:40px;margin-right:3px;}
+.upload-file div{ font-size:10px;color:#aaa;line-height:20px;cursor:pointer;}
+.upload-file div span{ color:#aaa;}
+.upload-file .ico-delete-upload{position:absolute;top:-10px;width:20px;height:20px;right:0;font-size:10px !important; color:#bbb;
+                                cursor:pointer;}
+.reply-box .ico-delete-upload { top:-5px;}
+/*回复*/
+.logo-upload { background-color:#eee;width:60px;height:60px;float:left;margin-right:10px;position:absolute;z-index:100;}
+.logo-upload img{ margin:10px 0 0 13px;}
+.upload-lump {position:relative;left:13px;top:10px;width:35px;height:40px;background-color:#1DE9B6; }
+.upload-lump .content { color:#efefef;text-align:center;line-height:40px;font-size:12px;}
+.upload-lump .lump { position:absolute;right:0;top:0;z-index:888;width:0;height:0;border-top:5px solid #eee;border-right:5px solid #eee;border-left:5px solid rgba(0,0,0,0.1);border-bottom:5px solid rgba(0,0,0,0.1);}
+.information-upload { background-color:#fafafa;position:relative;margin-left:60px;}
+.information-upload .filename{color:#222;margin-top:7px;}
+.popup-download { height:60px;background-color:rgba(204,204,204,0.9);width:111px;z-index:100;top:0;left:60px;position:absolute;
+                  font-size:28px !important;text-align:center;color:#fff !important;line-height:60px !important;}
+.reply-box .iconfont { background-color:#fff;border:0;font-size:22px;margin-top:5px;color:#999;cursor:pointer;}
+.reply-box .iconfont:hover { color:#4a98e7;}
+.reply-box input:last-child { margin-top:8px;}
+

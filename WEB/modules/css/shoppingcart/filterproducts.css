@@ -1,0 +1,88 @@
+﻿
+/*分类层级*/
+.top-div { height:50px; padding-bottom:5px;}
+/*.category-map {  }
+.category-map li{ height:30px; line-height:30px; color:#333; cursor:pointer; float:left; padding-right:20px; }
+.category-map li span { font-family: simsun; font-style: normal; padding-left:5px; }
+.category-map li:hover{  color:#B10000; }*/
+.top-div li { float:left; }
+.top-div li a{float:left;position:relative;display:block;height:20px;padding:10px 20px 10px 20px;margin:0 15px 0 0;font-size:14px;color:#fff;text-align:center;background:#ccc;}
+.top-div li a:after,.top-div li a:before{position:absolute;top:0;content:"";width:0;height:0;border:0 solid #ccc;border-width:20px 10px;}
+.top-div li a:after{left:100%;border-color:transparent;border-left-color:#ccc;}
+.top-div li a:before{left:-10px;border-left-color:transparent;}
+.top-div li:first-child a{border-radius:10px 0 0 10px;}
+.top-div li:first-child a:before{display:none;}
+.top-div li:last-child a{padding-right:20px;border-radius:0 10px 10px 0;}
+.top-div li:last-child a:after{display:none;}
+.top-div li a:hover{background:#ccc;}
+.top-div li a:hover:after{border-left-color:#ccc;}
+.top-div li a:hover:before{border-color:#ccc;border-left-color:transparent;}
+.top-div li:last-child a{background:#318ae4;}
+.top-div li:last-child a:after{border-left-color:#318ae4;}
+.top-div li:last-child a:before{border-color:#318ae4;border-left-color:transparent;}
+
+/*筛选条件*/
+.attr-filter { border:dashed 1px #ccc; padding:10px;}
+
+/*属性筛选*/
+.attr-item { overflow:auto; }
+.attrkey{float:left; line-height:35px; text-indent:20px; }
+.attrValues{ width:90%; float:left;line-height:35px; height:37px;  }
+.attrValues li { height:25px; line-height:25px; float:left; padding:0 20px; margin:5px 0; cursor:pointer; display:inline-block; }
+.attrValues li.hover { border:solid 1px #4A99E8; color:#4A99E8; }
+
+#unit li {  border:none;padding:0;height:25px; line-height:25px;color:#333;}
+#unit li:hover { border: none; color: #333; }
+
+#beginprice, #endprice { width:60px; }
+
+.search-btn { line-height:18px !important; }
+
+
+/*产品列表样式*/
+.productlist { width:100%; overflow:auto;padding:0 10px;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;}
+.productlist li{ width:250px; height:350px; float:left; margin-top:20px; }
+
+.productlist .product-item{  width:230px; height:320px; padding:3px; border:solid 3px #eee; display:inline-block; position:relative; }
+.productlist li:hover .product-item{ border:solid 3px #B10000; }
+.productlist li:hover .btnAddCart{display:block; }
+
+.product-item .productimg { width:230px; height:230px; overflow:hidden; display:inline-block; }
+.product-item .productimg img{ width:230px; height:230px;}
+
+.product-item .price { color:#B10000; height:30px; line-height:30px; font-size:16px; }
+
+.product-item .name {color:#333; }
+.product-item .name:hover { text-decoration:underline; color:#B10000; }
+
+.product-item .btnAddCart { height:35px; line-height:35px; width:100%; color:#999; position:absolute; cursor:pointer; 
+                            text-align:center; bottom:0px; left:0px; font-size:16px; background-color:#ddd;  }
+.productlist li:hover .btnAddCart{ background-color:#B10000; color:#fff;}
+
+#pager { margin:50px auto; }
+
+/*加入到购物车弹出层*/
+.add-cart-div { height:400px; padding-bottom:5px;}
+.add-cart-div .image{ height:400px; width:400px; border:solid 1px #ccc; overflow:hidden;}
+.add-cart-div .image img{ height:400px; width:400px;}
+
+.add-cart-div .product-name { margin-left:50px; width:500px; overflow:auto; min-height:400px;}
+.add-cart-div .product-name h1{ font-size:16px;}
+
+.product-name .price li { height:50px; float:left; line-height:50px;}
+.product-name .price .column { width:60px;color:#333;}
+.product-name .price .commonprice { text-decoration:line-through; margin-left:10px; font-size:14px;}
+
+.cart-attrs { }
+.cart-attrkey{ width:60px; float:left; line-height:35px;  text-align:left;}
+.cart-attrValues{ width:400px; float:left;line-height:35px; height:35px; height:auto;}
+.cart-attrValues li { height:21px; line-height:21px; float:left; padding:0 20px; margin:5px 10px 5px 0; border:solid 2px #ccc; cursor:pointer; display:inline-block; }
+.cart-attrValues li:hover { border:solid 2px #B10000; color:#B10000; }
+.cart-attrValues li.hover { border:solid 2px #B10000; color:#B10000; }
+
+/*编辑数量/加入购物车*/
+.choose-quantity { width: 60px; height: 34px; }
+
+.addcart { height:36px; background-color:#B10000; line-height:36px; text-align:center; width:80px; color:#fff; font-size:14px; font-weight:bold; padding:0 20px; border:none; cursor:pointer; }
+
+.choose-div .stock { height:50px; line-height:50px;  }

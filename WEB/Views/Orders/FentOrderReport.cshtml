@@ -1,0 +1,228 @@
+﻿@{
+    var order = (IntFactoryEntity.OrderEntity)ViewBag.Model;
+    var currentUser = (IntFactoryEntity.Users)Session["ClientManager"];
+    var list = order.OrderCoss;
+    string[] orderImages = order.OrderImages.Trim(',').Split(',');
+    if (orderImages.Length == 1)
+    {
+        orderImages = new string[] { orderImages[0], string.Empty };
+    }
+    if (orderImages.Length == 0)
+    {
+        orderImages = new string[] { string.Empty, string.Empty };
+    }
+    ViewBag.Title = "打样报价";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-language" content="zh-CN" />
+	<meta name="author" content="zuroke" />
+	<title>@ViewBag.Title</title>
+    <link href="/modules/css/default/layout.css" rel="stylesheet" />
+    <link href="/modules/css/base.css" rel="stylesheet" />
+    <link href="/modules/css/default/fentorderreport.css" rel="stylesheet" />
+    <link href="/modules/css/iconfont/iconfont.css" rel="stylesheet" />
+
+    <script src="/Scripts/jquery-1.11.1.js"></script>    
+    <script src="/Scripts/sea.js"></script>
+    <script src="/Scripts/sea-config.js"></script>
+    <script type="text/javascript">
+        seajs.use(["scripts/orders/fentorderreport"], function (obj) {
+            obj.init('@order.Platemaking', '@order.Price.ToString("f2")', '@(order.CostPrice.ToString("f2"))', '@(order.FinalPrice.ToString("f2"))', '@((order.ProfitPrice * 100).ToString("f2"))','@(order.OrderImage)','@order.OrderID');
+        });
+    </script>
+
+</head>
+<body>
+<div class="report">   
+   <div class="left report-tb mBottom30">
+       <table id="tabletoexcel" style="width:1000px;">
+        <tr>
+            <td colspan="4">
+                <div class="titlename head">@(currentUser.Client.CompanyName)打样报价单</div>
+            </td>
+        </tr>
+        <tr>
+            <td>                        
+                <table class="no-border img-order ">
+                    <tr>
+                        <td class=" no-border-left no-border-top">前片图片</td>
+                        <td class=" no-border-right no-border-top">后片图片</td>
+                    </tr>
+                    <tr id="img">
+                        <td class="no-border-left order-image" id="OneImgBox">
+                            <div id="img-one">
+                                <img src="@(string.IsNullOrEmpty(orderImages[0])?"/modules/images/none-img.png":orderImages[0])" />
+                            </div>
+                            <div id="upLoadOneImg" class="layer-upload iconfont btn">&#xe60b;</div>                        
+                        </td>
+                        <td class="order-image no-border-right" id="TwoImgBox">
+                            <div id="img-two">
+                                <img src="@(string.IsNullOrEmpty(orderImages[1])?"/modules/images/none-img.png":orderImages[1])" />
+                            </div>
+                            <div id="upLoadTwoImg" class="layer-upload btn iconfont">&#xe60b;</div>                        
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table class="no-border style-information" style="height:100%;width:270px">
+                    
+                    <tr>
+                        <td class="no-border-left no-border-top">款号：</td>
+                        <td class="no-border-right no-border-top font14">@(order.IntGoodsCode==""?"--":order.IntGoodsCode)</td>
+                    </tr>            
+                    <tr>
+                        <td class="no-border-left">品名：</td>
+                        <td class="no-border-right font14">@(order.CategoryName==""?"--":order.CategoryName)</td>
+                    </tr>
+                    <tr>                        
+                        <td class="no-border-left"><i class="iconfont icon-delete customer">&#xe613;</i>客户:</td>
+                        <td class="no-border-right font14">@(order.CustomerName==""?"--":order.CustomerName)</td>
+                    </tr>
+                    <tr>
+                        <td class="no-border-left">制版：</td>
+                        <td class="no-border-right font14">@(order.Tasts.Find(m=>m.Mark==12)==null?"": order.Tasts.Find(m=>m.Mark==12).Owner.Name)</td>
+                    </tr>                    
+                    <tr>
+                        <td class="no-border-left no-border-bottom">时间：</td>
+                        <td class="no-border-bottom no-border-right font14">@(order.PlanTime.ToString("yyyy-MM-dd"))</td>
+                        
+                    </tr>
+                    
+                </table>
+            </td>               
+            <td>
+                <table class="time-order no-border" style="height:100%;width:325px;">
+                    <tr>
+                        <td class="width100">报价：</td>
+                        <td class="no-border-right priceoffer"><input type="text" class="offer" value="" style="border-color:#4798ea" /></td>
+                    </tr>                    
+                    <tr>
+                        <td colspan="2" class="no-border-right">优惠价</td>   
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="no-border-right" id="price-range" style="height:108px"></td>
+                    </tr>
+                </table>
+            </td>                     
+        </tr>
+    </table> 
+       <table class="no-border size-plate" style="width:999px;">        
+        <tr>
+            <td rowspan="2" class="no-border-top head font18" data-id="size-plate" style="width:110px;"><i class="iconfont icon-delete information ">&#xe613;</i>尺寸信息</td>            
+        </tr>
+        <tr>
+            <td id="Platemak" style="border-top:0;"></td>
+        </tr>
+    </table>
+       <table class="no-border material" style="width:999px;">
+          <tr>
+              <td rowspan="@(order.Details.Count+2)" class="head font18 no-border-top" data-id="material" style="width:110px;"><i class="iconfont icon-delete information ">&#xe613;</i>物料明细</td>
+          </tr>
+          <tr>
+              <td colspan="4" class="no-border-top">
+                  <table class="no-border Processing">
+                    <tr class="longtd head">
+                        <td style="width:8%;font-size:16px;" class="no-border-top no-border-left tLeft pLeft5">材料</td>       
+                        <td style="width:10%;font-size:16px;" class="no-border-top providers tLeft pLeft5" data-id="providers">
+                            <i class="iconfont icon-delete information ">&#xe613;</i>
+                            供应商
+                        </td>
+                        <td style="font-size:16px;" class="no-border-top phones tLeft pLeft5" data-id="phones">
+                            <i class="iconfont icon-delete information">&#xe613;</i>
+                            联系方式
+                        </td>
+                        <td style="width:30%;font-size:16px;" class="no-border-top addresses tLeft pLeft5" data-id="addresses"> 
+                            <i class="iconfont icon-delete information">&#xe613;</i>
+                            地址  
+                        </td>                       
+                        <td style="font-size:16px;" class="no-border-top">用料</td>
+                        <td style="font-size:16px;" class="no-border-top">
+                            单位
+                        </td>
+                        <td style="font-size:16px;width:10%" class="no-border-top price" data-id="price">
+                            <i class="iconfont icon-delete information">&#xe613;</i>                            
+                            单价
+                        </td>
+                        <td style="font-size:16px;" class="no-border-top no-border-right cost" data-id="cost">
+                            <i class="iconfont icon-delete information">&#xe613;</i>    
+                            成本
+                        </td>         
+                    </tr>
+
+                    @if (order.Details.Count>0)
+                    {
+                        foreach (var detail in order.Details)
+                        {
+                            <tr>
+                                <td class="no-border-left font14 tLeft pLeft5">@(detail.ProductName==""?"--":detail.ProductName)</td>
+                                <td class="providers font14 tLeft pLeft5">@(detail.ProviderName==""?"--":detail.ProviderName)</td>
+                                <td class="phones font14 tLeft pLeft5">@(string.IsNullOrEmpty( detail.ProviderMobileTele)?"--":detail.ProviderMobileTele)</td>
+                                <td class="addresses font14 tLeft pLeft5">@(detail.ProviderAddress==""?"--":detail.ProviderAddress)</td>                                
+                                <td>@(detail.Quantity.ToString("f3"))</td>
+                                <td>@(detail.UnitName)</td>
+                                <td class="price font14">@(detail.Price.ToString("f2"))</td>
+                                <td class="no-border-right cost font14">@((detail.TotalMoney).ToString("f3"))</td>         
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr><td class="no-border-left no-border-right" colspan="9"><div class="nodata-txt"></div></td></tr>
+                    }
+                </table>
+              </td>
+          </tr>
+       </table>
+       <table class="no-border machine" style="width:999px;">        
+            <tr>
+                <td rowspan="@(list.Count+2)" class="head font18 no-border-top" data-id="machine" style="width:110px;"><i class="iconfont icon-delete information ">&#xe613;</i>加工费</td>
+            </tr>
+            <tr>
+                <td colspan="4" class="no-border-top">
+                    <table width="100%" class="no-border">
+                        <tr class="head">
+                            <td style="width:50%;font-size:16px;" class="no-border-top no-border-left">加工项</td>
+                            <td style="width:50%;font-size:16px;" class="no-border-top no-border-right">金额</td>
+                        </tr>
+                        @if (list.Count>0)
+	                    {
+		                    foreach (var item in list)
+	                        {
+		                        <tr>
+                                    <td class="font14 no-border-left no-border-bottom">@(item.Remark)</td>
+                                    <td class="font14 no-border-right no-border-bottom">@(item.Price)</td>
+                                </tr>
+	                        }
+                        }
+                        else
+                        {
+                            <tr><td colspan="4" class="no-border-left no-border-right no-border-bottom"><div class="nodata-txt"></div></td></tr>
+                        } 
+                    </table>        
+                </td>
+            </tr>
+        </table>        
+   </div>      
+   
+    <div class="btn-ok" style="cursor:pointer;width:1100px;" title="预览">
+        <i class="iconfont font22 mLeft20">&#xe605;</i>
+        <span class="mTop22 font14">预览</span>
+    </div>
+
+    <div class="export hide">
+        <span class="iconfont font24 mLeft20 color666 left print" style="cursor:pointer;position:absolute">&#xe658;</span>
+        <span class="iconfont font18 mLeft60 color666 get-back" style="cursor:pointer;position:absolute"><i class="iconfont mRight5">&#xe62d;</i><span class="font14">返回</span></span>
+    </div>   
+ </div>
+</body>
+</html>
+
+
+

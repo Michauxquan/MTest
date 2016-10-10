@@ -1,0 +1,74 @@
+﻿@{
+    Layout = null;
+    IntFactoryEntity.Users CurrentUser = (IntFactoryEntity.Users)Session["ClientManager"]; 
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta content="供应链管理，智能工厂，流程管理，服装可视化管理" name="keywords"/>
+    <meta content="中国市场最通用的智能工厂服装可视化管理平台，供应链管理，功能强大，2016年开始运营" name="description"/>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1" name="viewport"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <title>厂盟账号授权-厂盟智能</title>
+    <link href="/modules/css/iconfont/iconfont.css" rel="stylesheet" />
+    <link href="/modules/css/base.css" rel="stylesheet" />
+    <link href="/modules/css/default/layout.css" rel="stylesheet" />
+    <link href="/modules/css/home/login.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" href="/modules/images/logo_login.png"/>
+    <script type="text/javascript" src="/Scripts/sea.js"></script>
+    <script type="text/javascript" src="/Scripts/sea-config.js"></script>
+    <script type="text/javascript">
+        seajs.use(["scripts/home/login"], function (home) {
+            home.initLogin('@(ViewBag.Status)', '@ViewBag.BindAccountType', '@ViewBag.ReturnUrl');
+        });
+    </script>
+</head>
+<body>
+    <div class="login-body">
+        <div class="login-header">
+            <div class="left header-logo" onclick="location.href='http://www.intfactory.cn/'">
+                <div class="left"><img src="/modules/images/logo_login.png" style="width:60px;" /></div>
+                <div class="clear"></div>
+            </div>
+       </div>
+
+        <div class="main">
+            <div class="loginTitle">
+                厂盟账号授权
+                <span class="right mTop5">云销二当家</span>
+            </div>
+            <div class="login">
+                <div class="registerErr hide"></div>
+                @if (CurrentUser == null)
+                {
+                    <div class="loginbar">
+                        <input type="text" class="input icoUserName" id="iptUserName" placeholder="请输入账号" value="@ViewBag.UserName" maxlength="25"/>
+                    </div>
+                    <div class="loginbar" style="position:relative;">
+                        <input type="password" class="input icoUserPwd" id="iptPwd"/>
+                        <div class="txtBoxPassword">请输入密码</div>
+                    </div>
+                    <div class="btnLogin mTop" id="btnLogin">授权厂盟账号登录</div>
+                }
+                else
+                {
+                    <div style="line-height:50px;">
+                       您的账号<span style="color:#4a98e7; font-size:14px;"> @CurrentUser.Name </span>已登录，点击立即登录授权并登录
+                    </div>
+                    <a class="btnLogin" href="@(ViewBag.ReturnUrl)?sign=@(ViewBag.Sign)&userid=@(CurrentUser.UserID)&clientid=@(CurrentUser.ClientID)">立即登录</a>
+                    <a class="btnLogin" style="background-color:#ccc;" href="@(YXERP.Common.Common.YXClientUrl)/Home/Login">取消</a>
+                }
+                <div class="remember-box">
+                    <div class="left"><a class="linkRegister" href="/Home/Register">注册厂盟账号</a></div>
+                    <div class="right pRight5"><a href="/Home/FindPassword" class="linkRegister">忘记密码?</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            Copyright©2016-2017，备案号：浙ICP16001314  技术支持 <a href="http://www.yunxiaokeji.com/">云销科技</a>
+        </div>
+    </div>
+</body>
+</html>

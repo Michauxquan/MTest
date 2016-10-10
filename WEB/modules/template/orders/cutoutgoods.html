@@ -1,0 +1,40 @@
+﻿
+<div style="max-height:300px; overflow:auto;min-width:520px;">
+<table  class="table-list">
+<tr class="tr-header">
+    <td class="tLeft" style="text-indent:0;">规格</td>
+    <td class="">下单量</td>
+    <td class="">已{%=$data.taskDesc%}</td>
+    <td class="">{%=$data.taskDesc%}数量</td>
+</tr>
+{%
+	for(var i=0, j=$data.length; i < j; i++){
+	var item = $data[i];
+%}
+<tr data-id="{%=item.AutoID%}" class="list-item">
+    <td class=""  style="text-indent:0;">{%=item.Remark%}</td>
+    <td class="center">{%=item.Quantity%}</td>
+    <td class="center">{%=item.CutQuantity%}</td>
+    <td class="center"><input class="width60 quantity" maxlength="20" data-max="{%=item.Quantity-item.CutQuantity%}" type="text" value="0" /></td>
+</tr>
+{% } %}
+
+</table>
+</div>
+<ul class="easydialog-create">
+    <li>
+        <span class="width80 red">注意：</span>
+        <span class="red">提交后不能撤销或修改，请确认数量输入正确</span>
+    </li>
+    <li>
+        <span class="width80">操作人：</span>
+        <label class="owner-name"></label>
+        <span class="change-ico iconfont hand choose-owner">&#xe60b;</span>
+    </li>
+    <li>
+        <span class="width80">备注：</span>
+        <textarea id="expressRemark" maxlength="1000">
+            
+        </textarea>
+    </li>
+</ul>

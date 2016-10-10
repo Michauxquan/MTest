@@ -1,0 +1,62 @@
+﻿{%
+	for(var i=0, j=$data.length; i < j; i++){
+	var item = $data[i];
+    if(i>0){
+    %}
+%}
+<tr class="line-item">
+    <td colspan="10"></td>
+</tr>
+{%}%}
+<tr class="item-header">
+    <td class="bolder width50">
+        {%=item.CreateTime.toDate('yyyy-MM-dd')%}
+    </td>
+    <td class="tLeft">采购单号：{%=item.DocCode%}</td>
+    <td>编码</td>
+    <td>数量</td>
+    <td>入库数</td>
+    <td>入库金额</td>
+    <td>采购价</td>
+    <td>总金额</td>
+    <td class="">
+        <span class="{%=item.Status<2?'red':''%} mBottom10">{%=item.StatusStr%}</span>
+        <div class="right iconfont dropdown" data-status="{%=item.Status%}" data-id="{%=item.DocID%}">
+            <span class="{%=item.Status < 2? 'ico-dropdown':''%}"></span>
+        </div>
+    </td>
+</tr>
+    
+{%
+    for(var k=0,kk=item.Details.length;k<kk;k++){
+        var detailItem=item.Details[k];
+ %}
+     <tr class="item {%=k==kk-1?'last':''%}">
+        {%
+            if(k==0)
+            {
+         %}
+         <td rowspan="{%=kk%}" class="tLeft bBottom bRight">
+             <img onerror="$(this).attr('src','/modules/images/img-noimg.png')" alt="样图" src="{%=item.DocImage?item.DocImage:'/modules/images/img-noimg.png'%}" style="width:80px;height:80px;" />
+         </td>
+         {%}%}
+         <td class="bBottom tLeft"><a href="/Products/ChooseDetail?pid={%=detailItem.ProductID%}&did={%=detailItem.ProductDetailID%}" target="_blank">{%=detailItem.ProductName+"&nbsp;&nbsp;"%}<span class="color999">{%=detailItem.Remark%}</span></a></td>
+         <td class="bBottom">{%=detailItem.DetailsCode?detailItem.DetailsCode: detailItem.ProductCode%}</td>
+         <td class="bBottom">{%=detailItem.Quantity.toFixed(2)%}</td>
+         <td class="bBottom">{%=detailItem.Complete.toFixed(2)%}</td>
+         <td class="bBottom">{%=(detailItem.Complete*detailItem.Price).toFixed(2)%}</td>
+         <td class="bBottom">{%=detailItem.TotalMoney.toFixed(2)%}</td>
+         {%
+         if(k==0)
+         {
+         %}
+         <td rowspan="{%=kk%}" class="bBottom bLeft">{%=item.TotalMoney.toFixed(2)%}</td>
+         <td rowspan="{%=kk%}" class="bBottom bLeft">
+             <a href="/Products/DocDetail/{%=item.DocID%}" target="_blank">
+                 查看详情
+             </a>
+         </td>
+         {%}%}
+     </tr>
+{%}%}
+{% } %}
